@@ -64,9 +64,9 @@ import { XClass } from '../plugins/xClass'
 
 withDefaults(
   defineProps<{
-    fixedHeader: boolean
-    fixedFooter: boolean
-    sidebarRight: boolean
+    fixedHeader?: boolean
+    fixedFooter?: boolean
+    sidebarRight?: boolean
     classes?: {
       wrapper?: XClass
       contentWrapper?: XClass

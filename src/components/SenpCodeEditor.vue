@@ -19,7 +19,7 @@ import { html } from '@codemirror/lang-html'
 import { json } from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { languages } from '@codemirror/language-data'
-import { syntaxHighlighting, HighlightStyle } from '@codemirror/language'
+// import { syntaxHighlighting, HighlightStyle } from '@codemirror/language'
 import { keymap, KeyBinding, EditorView } from '@codemirror/view'
 import { Prec } from '@codemirror/state'
 import { EditorSelection, StateCommand, Text, Transaction } from '@codemirror/state'
@@ -99,16 +99,16 @@ const customKeyMap: KeyBinding[] = [
   },
 ]
 
-const markdownHighlighting = HighlightStyle.define([
-  { tag: t.string, class: 'text-base' },
-  { tag: t.heading1, class: 'text-[1.65em] text-pink-200' },
-  { tag: t.heading2, class: 'text-[1.4em] text-rose-200' },
-  { tag: t.heading3, class: 'text-[1.25em] text-pink-100' },
-  { tag: t.heading4, class: 'text-[1.125em] text-rose-100 font-semibold' },
-  { tag: t.comment, class: 'italic text-gray-400' },
-  { tag: t.emphasis, class: 'italic text-lime-200' },
-  { tag: t.strong, class: 'font-semibold text-cyan-300' },
-])
+// const markdownHighlighting = HighlightStyle.define([
+//   { tag: t.string, class: 'text-base' },
+//   { tag: t.heading1, class: 'text-[1.65em] text-pink-200' },
+//   { tag: t.heading2, class: 'text-[1.4em] text-rose-200' },
+//   { tag: t.heading3, class: 'text-[1.25em] text-pink-100' },
+//   { tag: t.heading4, class: 'text-[1.125em] text-rose-100 font-semibold' },
+//   { tag: t.comment, class: 'italic text-gray-400' },
+//   { tag: t.emphasis, class: 'italic text-lime-200' },
+//   { tag: t.strong, class: 'font-semibold text-cyan-300' },
+// ])
 
 const languageMap = {
   markdown: [
@@ -119,7 +119,7 @@ const languageMap = {
         addKeymap: true,
       })
     ),
-    Prec.high(syntaxHighlighting(markdownHighlighting)),
+    // Prec.high(syntaxHighlighting(markdownHighlighting)),
   ],
   html: [
     Prec.highest(

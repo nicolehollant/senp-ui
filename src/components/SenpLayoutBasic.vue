@@ -91,19 +91,27 @@
 <script setup lang="ts">
 import { XClass } from '../plugins/xClass'
 
-defineProps<{
-  fixedHeader?: boolean
-  fixedFooter?: boolean
-  sidebarLeft?: boolean
-  sidebarRight?: boolean
-  classes?: {
-    wrapper?: XClass
-    header?: XClass
-    content?: XClass
-    contentWrapper?: XClass
-    sidebarLeft?: XClass
-    sidebarRight?: XClass
-    footer?: XClass
+withDefaults(
+  defineProps<{
+    fixedHeader?: boolean
+    fixedFooter?: boolean
+    sidebarLeft?: boolean
+    sidebarRight?: boolean
+    classes?: {
+      wrapper?: XClass
+      header?: XClass
+      content?: XClass
+      contentWrapper?: XClass
+      sidebarLeft?: XClass
+      sidebarRight?: XClass
+      footer?: XClass
+    }
+  }>(),
+  {
+    fixedHeader: false,
+    fixedFooter: false,
+    sidebarLeft: false,
+    sidebarRight: false,
   }
-}>()
+)
 </script>

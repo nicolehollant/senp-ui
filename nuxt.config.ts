@@ -1,18 +1,6 @@
-import Icons from 'unplugin-icons/vite'
-import IconsResolver from 'unplugin-icons/resolver'
-import Components from 'unplugin-vue-components/vite'
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss', 'nuxt-headlessui', '@nuxt/content'],
-  vite: {
-    plugins: [
-      Components({
-        resolvers: [IconsResolver()],
-      }),
-      Icons(),
-    ],
-  },
+  modules: ['@nuxtjs/tailwindcss', 'nuxt-headlessui', '@nuxt/content', 'nuxt-icon'],
   content: {
     highlight: {
       theme: 'github-dark',

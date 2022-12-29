@@ -28,11 +28,8 @@
         <code class="text-blue-300 font-semibold">nuxt extends</code>
       </p>
       <div class="flex gap-2 items-center justify-center">
-        <NuxtLink to="/docs">
-          <SenpButton>Docs</SenpButton>
-        </NuxtLink>
-        <NuxtLink to="/playground/edit">
-          <SenpButton>Playground</SenpButton>
+        <NuxtLink to="/examples/fixed-sidebar/fixed-head">
+          <SenpButton>Examples</SenpButton>
         </NuxtLink>
       </div>
     </template>

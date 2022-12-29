@@ -13,17 +13,6 @@ export default defineNuxtConfig({
       Icons(),
     ],
   },
-  hooks: {
-    'vite:extendConfig': (config, { isClient, isServer }) => {
-      if (isClient && config?.resolve?.alias) {
-        ;(config.resolve.alias as any).vue = 'vue/dist/vue.esm-bundler'
-      }
-    },
-  },
-  components: {
-    global: true,
-    dirs: ['~/components/docs', '~/components/senp'],
-  },
   content: {
     highlight: {
       theme: 'github-dark',
@@ -39,5 +28,5 @@ export default defineNuxtConfig({
       ],
     },
   },
-  srcDir: 'src/',
+  srcDir: './src/',
 })

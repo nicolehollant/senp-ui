@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { XClass } from '~~/src/plugins/xClass'
+import { XClass } from '../plugins/xClass'
 
 defineEmits<{
   (event: 'update:modelValue', newValue: string): void

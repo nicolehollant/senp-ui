@@ -1,6 +1,6 @@
 <template>
   <Codemirror
-    v-model="state.content"
+    :model-value="modelValue"
     @update:model-value="(v) => $emit('update:modelValue', v)"
     :placeholder="($attrs.placeholder as any) || ''"
     :style="{ height: 'auto' }"
@@ -8,33 +8,42 @@
     :indent-with-tab="true"
     :tab-size="2"
     :extensions="extensions"
+    :disabled="disabled"
     @ready="handleReady"
   ></Codemirror>
 </template>
 
 <script setup lang="ts">
+import { expandAbbreviation, abbreviationTracker } from '@emmetio/codemirror6-plugin'
+import { oneDark } from '@codemirror/theme-one-dark'
+import { basicSetup } from 'codemirror'
 import { Codemirror } from 'vue-codemirror'
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { html } from '@codemirror/lang-html'
 import { json } from '@codemirror/lang-json'
-import { oneDark } from '@codemirror/theme-one-dark'
 import { languages } from '@codemirror/language-data'
-// import { syntaxHighlighting, HighlightStyle } from '@codemirror/language'
 import { keymap, KeyBinding, EditorView } from '@codemirror/view'
-import { Prec } from '@codemirror/state'
+import { Extension, Prec } from '@codemirror/state'
 import { EditorSelection, StateCommand, Text, Transaction } from '@codemirror/state'
 import { tags as t } from '@lezer/highlight'
+import { defaultHighlightStyle, HighlightStyle, syntaxHighlighting } from '@codemirror/language'
 
 const props = withDefaults(
   defineProps<{
     modelValue: string
     enterAction: 'submit' | 'default'
     language: keyof typeof languageMap
+    extensions?: Extension[]
+    theme?: 'default' | 'onedark'
+    disabled?: boolean
   }>(),
   {
     modelValue: '',
+    theme: 'default',
     enterAction: 'default',
     language: 'markdown',
+    extensions: () => [],
+    disabled: false,
   }
 )
 
@@ -77,8 +86,8 @@ const keyDownExt = EditorView.domEventHandlers({
   keydown: (e) => {
     if (e.key === 'Enter' && !e.shiftKey && props.enterAction === 'submit') {
       e.preventDefault()
-      emit('submit', state.content)
-      state.content = ''
+      emit('submit', props.modelValue)
+      emit('update:modelValue', '')
       return true
     }
   },
@@ -99,55 +108,67 @@ const customKeyMap: KeyBinding[] = [
   },
 ]
 
-// const markdownHighlighting = HighlightStyle.define([
-//   { tag: t.string, class: 'text-base' },
-//   { tag: t.heading1, class: 'text-[1.65em] text-pink-200' },
-//   { tag: t.heading2, class: 'text-[1.4em] text-rose-200' },
-//   { tag: t.heading3, class: 'text-[1.25em] text-pink-100' },
-//   { tag: t.heading4, class: 'text-[1.125em] text-rose-100 font-semibold' },
-//   { tag: t.comment, class: 'italic text-gray-400' },
-//   { tag: t.emphasis, class: 'italic text-lime-200' },
-//   { tag: t.strong, class: 'font-semibold text-cyan-300' },
-// ])
+const markdownHighlighting = HighlightStyle.define([
+  { tag: t.string, class: 'text-base' },
+  { tag: t.heading1, class: 'text-[1.65em] text-pink-200' },
+  { tag: t.heading2, class: 'text-[1.4em] text-rose-200' },
+  { tag: t.heading3, class: 'text-[1.25em] text-pink-100' },
+  { tag: t.heading4, class: 'text-[1.125em] text-rose-100 font-semibold' },
+  { tag: t.comment, class: 'italic text-gray-400' },
+  { tag: t.emphasis, class: 'italic text-lime-200' },
+  { tag: t.strong, class: 'font-semibold text-cyan-300' },
+])
 
 const languageMap = {
   markdown: [
-    Prec.highest(
+    Prec.high(
       markdown({
         base: markdownLanguage,
         codeLanguages: languages,
         addKeymap: true,
       })
     ),
-    // Prec.high(syntaxHighlighting(markdownHighlighting)),
+    Prec.high(syntaxHighlighting(markdownHighlighting)),
   ],
   html: [
-    Prec.highest(
+    Prec.high(
       html({
         autoCloseTags: true,
         matchClosingTags: true,
         selfClosingTags: true,
       })
     ),
+    keymap.of([
+      {
+        key: 'Mod-e',
+        run: expandAbbreviation,
+      },
+      {
+        key: 'Tab',
+        run: expandAbbreviation,
+      },
+    ]),
+    abbreviationTracker(),
   ],
-  json: [Prec.highest(json())],
+  json: [Prec.high(json())],
 }
 
 const extensions = [
-  Prec.highest(keyDownExt),
-  Prec.highest(keymap.of(customKeyMap)),
-  oneDark,
+  basicSetup,
+  Prec.high(keyDownExt),
+  Prec.high(keymap.of(customKeyMap)),
   ...languageMap[props.language],
   EditorView.lineWrapping,
+  syntaxHighlighting(defaultHighlightStyle),
+  ...props.extensions.map((a) => Prec.highest(a)),
 ]
+if (props.theme === 'onedark') {
+  extensions.push(Prec.highest(oneDark))
+}
 const view = shallowRef()
 const handleReady = (payload: any) => {
   view.value = payload.view
 }
-
-const state = reactive({
-  content: props.modelValue,
-})
 </script>
 
 <style>

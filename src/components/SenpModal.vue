@@ -13,8 +13,8 @@
         <div class="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm" />
       </HeadlessTransitionChild>
 
-      <div class="fixed inset-0 overflow-y-auto">
-        <div class="flex min-h-full items-center justify-center p-4 pb-[10vmin] text-center">
+      <div class="fixed inset-0 overflow-hidden p-4 pb-[10vmin] h-full">
+        <div class="flex h-full items-center justify-center text-center overflow-hidden">
           <HeadlessTransitionChild
             as="template"
             enter="duration-200 ease-out"
@@ -25,14 +25,20 @@
             leave-to="opacity-0 scale-95"
           >
             <HeadlessDialogPanel
-              class="flex w-full max-w-md transform flex-col gap-6 overflow-hidden rounded-2xl border-2 border-neutral-700 bg-neutral-800 p-6 text-left align-middle shadow-xl transition-all"
+              class="flex w-full overflow-auto max-h-full max-w-6xl transform flex-col gap-6 rounded-2xl border-2 border-neutral-700 bg-neutral-800 text-left align-middle shadow-xl transition-all"
             >
               <slot name="title">
-                <HeadlessDialogTitle as="h3" class="text-lg font-medium leading-6" v-if="title">
+                <HeadlessDialogTitle
+                  as="h3"
+                  class="text-lg font-medium leading-6 sticky top-0 bg-neutral-800/50 backdrop-blur shadow p-6"
+                  v-if="title"
+                >
                   {{ title }}
                 </HeadlessDialogTitle>
               </slot>
-              <slot></slot>
+              <div class="px-6 pb-6">
+                <slot></slot>
+              </div>
             </HeadlessDialogPanel>
           </HeadlessTransitionChild>
         </div>

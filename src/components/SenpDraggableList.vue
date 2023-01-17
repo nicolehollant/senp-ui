@@ -3,9 +3,9 @@
     <draggable
       v-bind="$attrs"
       :animation="200"
-      :group="'description'"
+      :group="group"
       :disabled="false"
-      :ghostClass="'ghost'"
+      :ghostClass="ghostClass"
       class="list-group"
       :component-data="{
         tag: 'ul',
@@ -20,7 +20,7 @@
       :handle="handle"
     >
       <template v-for="(_, slot) of $slots" v-slot:[slot]="scope">
-        <div class="w-full h-full">
+        <div :key="scope.element[itemKey]" :class="$xClass('w-full h-full', classes?.elementWrapper)">
           <slot :name="slot" v-bind="scope"></slot>
         </div>
       </template>
@@ -30,15 +30,23 @@
 
 <script setup lang="ts">
 import draggable from 'vuedraggable'
+import { XClass } from '../plugins/xClass'
 withDefaults(
   defineProps<{
     modelValue: any[]
     itemKey?: string
     handle?: string
+    group?: string
+    ghostClass?: string
+    classes?: {
+      elementWrapper?: XClass
+    }
   }>(),
   {
     itemKey: 'id',
     handle: '',
+    group: 'description',
+    ghostClass: 'ghost',
   }
 )
 

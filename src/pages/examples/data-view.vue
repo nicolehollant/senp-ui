@@ -17,13 +17,6 @@
 </template>
 
 <script setup lang="ts">
-const message = ['vue.draggable', 'draggable', 'component', 'for', 'vue.js 2.0', 'based', 'on', 'Sortablejs']
-
-const list = ref(
-  message.map((name, index) => {
-    return { name, order: index + 1, id: index }
-  })
-)
 const data = ref([
   {
     Rank: '1',

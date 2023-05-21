@@ -36,9 +36,14 @@
 
 <script setup lang="ts">
 import '../assets/css/hljs-defaults.css'
-import hljs from 'highlight.js'
+// import hljs from 'highlight.js'
+import hljs from 'highlight.js/lib/common'
+
+// import { default as hljs } from 'highlight.js'
 import { XClass } from '../plugins/xClass'
 import { useClipboard } from '@vueuse/core'
+
+// const hljs = await import('highlight.js')
 const props = withDefaults(
   defineProps<{
     value: string

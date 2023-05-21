@@ -6,7 +6,7 @@
       :group="group"
       :disabled="false"
       :ghostClass="ghostClass"
-      class="list-group"
+      :class="{ 'list-group': true, dragging: drag }"
       :component-data="{
         tag: 'ul',
         type: 'transition-group',
@@ -20,8 +20,11 @@
       :handle="handle"
     >
       <template v-for="(_, slot) of $slots" v-slot:[slot]="scope">
-        <div :key="scope.element[itemKey]" :class="$xClass('w-full h-full', classes?.elementWrapper)">
-          <slot :name="slot" v-bind="scope"></slot>
+        <div
+          :key="scope.element[itemKey]"
+          :class="{ ...$xClass('w-full h-full', classes?.elementWrapper), draggingEl: drag }"
+        >
+          <slot :name="slot" v-bind="scope" :drag="drag"></slot>
         </div>
       </template>
     </draggable>

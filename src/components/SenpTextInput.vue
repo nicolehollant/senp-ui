@@ -4,7 +4,7 @@
       <p :class="$xClass('text-sm text-neutral-50', classes?.label)" v-if="label">{{ label }}</p>
     </slot>
     <input
-      type="text"
+      :type="type ?? 'text'"
       :class="
         $xClass(
           [
@@ -14,6 +14,7 @@
           classes?.input
         )
       "
+      v-bind="$attrs"
       :value="modelValue"
       @input="e => $emit('update:modelValue', (e as any).target.value)"
     />
@@ -37,6 +38,7 @@ defineProps<{
   label?: string
   hint?: string
   error?: string
+  type?: string
   classes?: {
     wrapper?: XClass
     label?: XClass

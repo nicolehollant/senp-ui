@@ -143,7 +143,8 @@
               </div>
               <SenpHljsHighlight
                 title="response"
-                class="h-full w-full"
+                class="h-full w-full overflow-hidden"
+                :classes="{ pre: { extend: '!overflow-auto h-full' } }"
                 language="json"
                 theme="atom-dark"
                 :value="response"
@@ -185,22 +186,22 @@ const props = withDefaults(
 )
 const ApiMethods: any = {
   POST: (
-    <div className="w-12 rounded text-center text-xs font-semibold py-0.5 tracking-wider text-orange-200 bg-orange-800/60">
+    <div class="w-12 rounded text-center text-xs font-semibold py-0.5 tracking-wider text-orange-200 bg-orange-800/60">
       POST
     </div>
   ),
   GET: (
-    <div className="w-12 rounded text-center text-xs font-semibold py-0.5 tracking-wider text-green-200 bg-green-800/60">
+    <div class="w-12 rounded text-center text-xs font-semibold py-0.5 tracking-wider text-green-200 bg-green-800/60">
       GET
     </div>
   ),
   PUT: (
-    <div className="w-12 rounded text-center text-xs font-semibold py-0.5 tracking-wider text-blue-200 bg-blue-800/60">
+    <div class="w-12 rounded text-center text-xs font-semibold py-0.5 tracking-wider text-blue-200 bg-blue-800/60">
       PUT
     </div>
   ),
   DELETE: (
-    <div className="w-12 rounded text-center text-xs font-semibold py-0.5 tracking-wider text-red-200 bg-red-800/60">
+    <div class="w-12 rounded text-center text-xs font-semibold py-0.5 tracking-wider text-red-200 bg-red-800/60">
       DEL
     </div>
   ),
@@ -218,7 +219,7 @@ const ApiMethod = defineComponent({
   },
 })
 
-const setActiveRoute = (route: typeof props.routes[number]) => {
+const setActiveRoute = (route: (typeof props.routes)[number]) => {
   state.value.activeMethod = route.method
   state.value.activeRoute = props.baseurl ? props.baseurl + route.path : route.path
   state.value.body = JSON.stringify(route.body, null, 2)
@@ -229,7 +230,7 @@ const state = ref({
   mode: 'request' as 'request' | 'response',
   view: 'horizontal' as 'horizontal' | 'vertical',
   activeRoute: '',
-  activeMethod: props.routes?.[0]?.method ?? ('GET' as typeof props.routes[number]['method']),
+  activeMethod: props.routes?.[0]?.method ?? ('GET' as (typeof props.routes)[number]['method']),
   activeHeaders: props.routes?.[0]?.headers ?? undefined,
   body: '{}',
 })

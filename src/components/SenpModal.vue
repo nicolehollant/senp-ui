@@ -25,12 +25,12 @@
             leave-to="opacity-0 scale-95"
           >
             <HeadlessDialogPanel
-              class="flex w-full overflow-auto max-h-full max-w-6xl transform flex-col gap-6 rounded-2xl border-2 border-neutral-700 bg-neutral-800 text-left align-middle shadow-xl transition-all"
+              class="flex w-full overflow-auto max-h-full max-w-6xl transform flex-col gap-6 rounded-2xl border-2 border-gray-700 bg-gray-800 text-left align-middle shadow-xl transition-all"
             >
               <slot name="title">
                 <HeadlessDialogTitle
                   as="h3"
-                  class="text-lg font-medium leading-6 sticky top-0 bg-neutral-800/50 backdrop-blur shadow p-6"
+                  class="text-lg font-medium leading-6 sticky top-0 bg-gray-800/50 backdrop-blur shadow p-6"
                   v-if="title"
                 >
                   {{ title }}

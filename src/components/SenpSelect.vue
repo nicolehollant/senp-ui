@@ -1,14 +1,14 @@
 <template>
   <label :class="$xClass('grid gap-1', classes?.wrapper)">
     <slot name="label">
-      <p :class="$xClass('text-sm text-neutral-50', classes?.label)" v-if="label">{{ label }}</p>
+      <p :class="$xClass('text-sm text-gray-50', classes?.label)" v-if="label">{{ label }}</p>
     </slot>
     <select
       :class="
         $xClass(
           [
-            'w-full rounded-lg bg-neutral-800 p-2 font-medium text-neutral-50 border',
-            error ? 'border-red-700' : 'border-neutral-700',
+            'w-full rounded-lg bg-gray-800 p-2 font-medium text-gray-50 border',
+            error ? 'border-red-700' : 'border-gray-700',
           ].join(' '),
           classes?.input
         )
@@ -29,7 +29,7 @@
       </slot>
     </select>
     <slot name="hint">
-      <p :class="$xClass('text-xs italic text-neutral-300', classes?.hint)" v-if="hint">{{ hint }}</p>
+      <p :class="$xClass('text-xs italic text-gray-300', classes?.hint)" v-if="hint">{{ hint }}</p>
     </slot>
     <slot name="error">
       <p :class="$xClass('text-sm text-red-300', classes?.error)" v-if="error">{{ error }}</p>

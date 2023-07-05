@@ -9,7 +9,7 @@
     ></SenpHljsHighlight>
     <details
       v-else-if="renderStyleFromDotPath?.type === 'expandable'"
-      class="gap-2 p-4 rounded-xl text-neutral-500 bg-neutral-800/30"
+      class="gap-2 p-4 rounded-xl text-gray-500 bg-gray-800/30"
     >
       <summary class="">
         <p class="ml-2 inline text-white">
@@ -18,7 +18,7 @@
       </summary>
       <div class="flex flex-col gap-2 pt-4 text-white">
         <div v-for="(val, key, index) in value">
-          <p class="text-xs text-neutral-400 font-medium tracking-wider mb-1">{{ key }}</p>
+          <p class="text-xs text-gray-400 font-medium tracking-wider mb-1">{{ key }}</p>
           <SenpAutoJson
             :parent-key="[parentKey, key].join('.')"
             :root-value="rootValue ?? value"
@@ -28,9 +28,9 @@
         </div>
       </div>
     </details>
-    <div v-else class="flex flex-col gap-2 p-4 rounded-xl bg-neutral-800/30">
+    <div v-else class="flex flex-col gap-2 p-4 rounded-xl bg-gray-800/30">
       <div v-for="(val, key, index) in value">
-        <p class="text-xs text-neutral-400 font-medium tracking-wider mb-1">{{ key }}</p>
+        <p class="text-xs text-gray-400 font-medium tracking-wider mb-1">{{ key }}</p>
         <SenpAutoJson
           :parent-key="[parentKey, key].join('.')"
           :root-value="rootValue ?? value"

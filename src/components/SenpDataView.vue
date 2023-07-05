@@ -13,7 +13,7 @@
     <DynamicScroller :items="filteredData" :min-item-size="40" pageMode :key-field="keyField">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :data-index="index">
-          <section class="grid gap-2 py-6 px-4 border-b border-neutral-800">
+          <section class="grid gap-2 py-6 px-4 border-b border-gray-800">
             <div
               v-if="headers.filter((a) => a.visible && a.as === 'list').length"
               class="grid pb-3"
@@ -35,11 +35,11 @@
                   <p
                     v-if="k.label"
                     class="text-xs"
-                    :class="{ 'text-neutral-400': k.style === 'standard', 'text-neutral-600': k.style === 'muted' }"
+                    :class="{ 'text-gray-400': k.style === 'standard', 'text-gray-600': k.style === 'muted' }"
                   >
                     {{ k.label }}
                   </p>
-                  <p :class="{ 'text-white': k.style === 'standard', 'text-neutral-400': k.style === 'muted' }">
+                  <p :class="{ 'text-white': k.style === 'standard', 'text-gray-400': k.style === 'muted' }">
                     {{ item[k.key] }}
                   </p>
                 </div>
@@ -51,7 +51,7 @@
             >
               <div
                 v-for="k in headers.filter((a) => a.visible && a.as === 'tag')"
-                class="rounded bg-neutral-900 flex leading-none"
+                class="rounded bg-gray-900 flex leading-none"
                 :class="{
                   'items-center flex-row': k.labelSide === 'left',
                   'items-center flex-row-reverse': k.labelSide === 'right',
@@ -62,8 +62,8 @@
                 <div
                   class="text-xs"
                   :class="{
-                    'text-neutral-400': k.style === 'standard',
-                    'text-neutral-600': k.style === 'muted',
+                    'text-gray-400': k.style === 'standard',
+                    'text-gray-600': k.style === 'muted',
                     'py-1 pl-2 pr-1': k.labelSide === 'left',
                     'py-1 pr-2 pl-1': k.labelSide === 'right',
                   }"
@@ -73,7 +73,7 @@
                 <div
                   :class="{
                     'text-white': k.style === 'standard',
-                    'text-neutral-400': k.style === 'muted',
+                    'text-gray-400': k.style === 'muted',
                     'py-1 pr-2 pl-1': k.labelSide === 'left',
                     'py-1 pl-2 pr-1': k.labelSide === 'right',
                   }"
@@ -86,7 +86,7 @@
               v-if="headers.filter((a) => a.visible && a.as === 'cell').length"
               class="flex space-evenly flex-wrap md:grid"
               :class="{
-                'bg-neutral-900 p-4 rounded-xl': headers.filter((a) => a.visible && a.as !== 'cell').length,
+                'bg-gray-900 p-4 rounded-xl': headers.filter((a) => a.visible && a.as !== 'cell').length,
                 'gap-4 md:gap-2': state.cellGap === 'sm',
                 'gap-4': state.cellGap === 'md',
                 'gap-8': state.cellGap === 'md',
@@ -116,13 +116,13 @@
                   <p
                     v-if="k.label"
                     class="text-xs shrink-0 break-all"
-                    :class="{ 'text-neutral-400': k.style === 'standard', 'text-neutral-600': k.style === 'muted' }"
+                    :class="{ 'text-gray-400': k.style === 'standard', 'text-gray-600': k.style === 'muted' }"
                   >
                     {{ k.label }}
                   </p>
                   <p
                     class="break-words"
-                    :class="{ 'text-white': k.style === 'standard', 'text-neutral-400': k.style === 'muted' }"
+                    :class="{ 'text-white': k.style === 'standard', 'text-gray-400': k.style === 'muted' }"
                   >
                     {{ item[k.key] }}
                   </p>
@@ -135,7 +135,7 @@
             >
               <div
                 v-for="k in headers.filter((a) => a.visible && a.as === 'tag')"
-                class="rounded bg-neutral-900 flex leading-none"
+                class="rounded bg-gray-900 flex leading-none"
                 :class="{
                   'items-center flex-row': k.labelSide === 'left',
                   'items-center flex-row-reverse': k.labelSide === 'right',
@@ -146,8 +146,8 @@
                 <div
                   class="text-xs"
                   :class="{
-                    'text-neutral-400': k.style === 'standard',
-                    'text-neutral-600': k.style === 'muted',
+                    'text-gray-400': k.style === 'standard',
+                    'text-gray-600': k.style === 'muted',
                     'py-1 pl-2 pr-1': k.labelSide === 'left',
                     'py-1 pr-2 pl-1': k.labelSide === 'right',
                   }"
@@ -157,7 +157,7 @@
                 <div
                   :class="{
                     'text-white': k.style === 'standard',
-                    'text-neutral-400': k.style === 'muted',
+                    'text-gray-400': k.style === 'muted',
                     'py-1 pr-2 pl-1': k.labelSide === 'left',
                     'py-1 pl-2 pr-1': k.labelSide === 'right',
                   }"
@@ -168,9 +168,8 @@
             </section>
             <details
               :class="{
-                'bg-neutral-900/20 border-l-2 border-neutral-900 !px-4': !headers.filter(
-                  (a) => a.visible && a.as !== 'cell'
-                ).length,
+                'bg-gray-900/20 border-l-2 border-gray-900 !px-4': !headers.filter((a) => a.visible && a.as !== 'cell')
+                  .length,
               }"
               class="rounded-sm py-2 px-2 leading-none w-full"
               v-if="headers.filter((a) => a.visible && a.as === 'details').length"
@@ -186,7 +185,7 @@
               >
                 <div
                   v-for="k in headers.filter((a) => a.visible && a.as === 'details')"
-                  class="rounded bg-neutral-900 px-4 py-1 flex items-center leading-none w-full"
+                  class="rounded bg-gray-900 px-4 py-1 flex items-center leading-none w-full"
                 >
                   <details class="w-full">
                     <summary class="w-full cursor-pointer">
@@ -210,14 +209,14 @@
       title="Table Settings"
     >
       <p class="mx-4 py-2 text-sm">Filters</p>
-      <div class="m-3 rounded-lg bg-neutral-900/20 p-2 grid gap-4">
+      <div class="m-3 rounded-lg bg-gray-900/20 p-2 grid gap-4">
         <div class="grid gap-4">
           <div class="grid gap-1">
-            <p class="text-xs text-neutral-200">Limit Data</p>
+            <p class="text-xs text-gray-200">Limit Data</p>
             <SenpTextInput v-model="state.limit"></SenpTextInput>
           </div>
           <div class="grid gap-1">
-            <p class="text-xs text-neutral-200">Filters</p>
+            <p class="text-xs text-gray-200">Filters</p>
             <div class="grid gap-2">
               <div class="flex items-center gap-2" v-for="(filter, i) in filters">
                 <SenpSelect
@@ -232,8 +231,8 @@
                 ></SenpSelect>
                 <SenpTextInput v-model="filter.value"></SenpTextInput>
                 <div class="flex items-center gap-1">
-                  <p class="text-lg text-neutral-400">(</p>
-                  <p class="text-xs text-neutral-400">Options</p>
+                  <p class="text-lg text-gray-400">(</p>
+                  <p class="text-xs text-gray-400">Options</p>
                   <SenpAutoComplete
                     v-if="(filter.op === '=' || filter.op === '!=') && filter.key"
                     :model-value="{ label: filter.value, value: filter.value }"
@@ -241,7 +240,7 @@
                     :display-value="(a) => a.label"
                     :options="filteredData.map((a) => ({ label: a[filter.key], value: a[filter.key] }))"
                   ></SenpAutoComplete>
-                  <p class="text-lg text-neutral-400">)</p>
+                  <p class="text-lg text-gray-400">)</p>
                 </div>
                 <SenpButton @click="() => filters.splice(i, 1)"><Icon name="mdi:trash-can"></Icon></SenpButton>
               </div>
@@ -254,7 +253,7 @@
         </div>
       </div>
       <p class="mx-4 py-2 text-sm">Sorters</p>
-      <div class="m-3 rounded-lg bg-neutral-900/20 p-2 grid gap-4">
+      <div class="m-3 rounded-lg bg-gray-900/20 p-2 grid gap-4">
         <div class="grid gap-2">
           <div class="flex items-center gap-2" v-for="(sorter, i) in sorters">
             <SenpSelect
@@ -271,23 +270,23 @@
         </div>
       </div>
       <p class="mx-4 py-2 text-sm">Global Settings</p>
-      <div class="m-3 rounded-lg overflow-hidden bg-neutral-900/20 p-2 grid gap-4">
+      <div class="m-3 rounded-lg overflow-hidden bg-gray-900/20 p-2 grid gap-4">
         <div class="flex flex-wrap gap-4">
           <div class="grid gap-1">
-            <p class="text-xs text-neutral-200">Cell Spacing</p>
+            <p class="text-xs text-gray-200">Cell Spacing</p>
             <SenpRadioGroup v-model="state.cellSpacing" :options="['even', 'max', 'auto']"></SenpRadioGroup>
           </div>
           <div class="grid gap-1">
-            <p class="text-xs text-neutral-200">Cell Gap</p>
+            <p class="text-xs text-gray-200">Cell Gap</p>
             <SenpRadioGroup v-model="state.cellGap" :options="['sm', 'md', 'lg']"></SenpRadioGroup>
           </div>
           <div class="grid gap-1">
-            <p class="text-xs text-neutral-200">Tag Position</p>
+            <p class="text-xs text-gray-200">Tag Position</p>
             <SenpRadioGroup v-model="state.tagPosition" :options="['top', 'bottom']"></SenpRadioGroup>
           </div>
         </div>
         <div class="grid gap-1">
-          <p class="text-xs text-neutral-200">Set All</p>
+          <p class="text-xs text-gray-200">Set All</p>
           <div class="flex gap-4 flex-wrap">
             <SenpActionButtonGroup
               :options="['cell', 'list', 'details', 'tag']"
@@ -338,10 +337,10 @@
           }"
             >
               <template #0>
-                <Icon name="mdi:eye-outline" class="text-neutral-400"></Icon>
+                <Icon name="mdi:eye-outline" class="text-gray-400"></Icon>
               </template>
               <template #1>
-                <Icon name="mdi:eye-off-outline" class="text-neutral-400"></Icon>
+                <Icon name="mdi:eye-off-outline" class="text-gray-400"></Icon>
               </template>
             </SenpActionButtonGroup>
           </div>
@@ -351,11 +350,11 @@
       <SenpDraggableList
         v-model="headers"
         handle=".handle"
-        class="grid gap-2 md:block md:divide-y md:divide-neutral-900 m-3 rounded-lg overflow-hidden"
+        class="grid gap-2 md:block md:divide-y md:divide-gray-900 m-3 rounded-lg overflow-hidden"
       >
         <template #item="{ element }">
           <li
-            class="rounded-lg md:rounded-none bg-neutral-900/20 px-2 py-1 cursor-move list-none grid md:grid-cols-12 gap-2 items-center"
+            class="rounded-lg md:rounded-none bg-gray-900/20 px-2 py-1 cursor-move list-none grid md:grid-cols-12 gap-2 items-center"
           >
             <div class="flex items-center gap-2 md:col-span-4">
               <div class="handle p-1 text-lg">
@@ -365,14 +364,14 @@
                 {{ element.key }}
               </p>
               <HeadlessSwitch v-model="element.visible">
-                <div class="text-lg w-8 h-8 flex justify-center items-center rounded bg-neutral-900">
+                <div class="text-lg w-8 h-8 flex justify-center items-center rounded bg-gray-900">
                   <Icon v-if="element.visible" name="mdi:eye-outline" class="text-blue-400"></Icon>
-                  <Icon v-else name="mdi:eye-off-outline" class="text-neutral-400"></Icon>
+                  <Icon v-else name="mdi:eye-off-outline" class="text-gray-400"></Icon>
                 </div>
               </HeadlessSwitch>
             </div>
             <div
-              class="flex flex-wrap gap-2 items-center ml-auto md:col-span-8 border-t md:border-none border-neutral-900/50"
+              class="flex flex-wrap gap-2 items-center ml-auto md:col-span-8 border-t md:border-none border-gray-900/50"
               v-if="element.visible"
             >
               <SenpTextInput v-model="element.label"></SenpTextInput>

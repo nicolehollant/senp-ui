@@ -6,20 +6,20 @@
         extend: '!flex-row overflow-hidden !p-0 rest-playground !gap-0',
       },
       header: {
-        extend: 'border-b-2 border-neutral-800 !pr-2',
+        extend: 'border-b-2 border-gray-800 !pr-2',
       },
       footer: {
         base: 'hidden',
       },
     }"
-    class="bg-neutral-900"
+    class="bg-gray-900"
   >
     <template #header>
       <h1 class="text-lg lg:text-xl">{{ title }}</h1>
       <div class="flex items-center gap-4">
         <SenpRadioGroup
           :options="['horizontal', 'vertical']"
-          :classes="{ option: { extend: '!bg-neutral-800' } }"
+          :classes="{ option: { extend: '!bg-gray-800' } }"
           v-model="state.view"
         >
           <template #0>
@@ -30,7 +30,7 @@
           </template>
         </SenpRadioGroup>
         <button
-          class="lg:hidden rounded cursor-pointer px-2 h-8 flex items-center justify-center bg-neutral-800 text-neutral-200 text-lg hover:bg-neutral-700 transition"
+          class="lg:hidden rounded cursor-pointer px-2 h-8 flex items-center justify-center bg-gray-800 text-gray-200 text-lg hover:bg-gray-700 transition"
           @click="() => (navOpen = true)"
         >
           <Icon name="mdi:menu" />
@@ -59,7 +59,7 @@
                 :key="route.method + route.path"
                 class="flex items-center gap-2 text-xs w-full px-2 py-2 rounded-md"
                 :class="{
-                  'bg-neutral-900': route.method === state.activeMethod && baseurl + route.path === state.activeRoute,
+                  'bg-gray-900': route.method === state.activeMethod && baseurl + route.path === state.activeRoute,
                 }"
               >
                 <ApiMethod :method="route.method"></ApiMethod>
@@ -70,7 +70,7 @@
         </SenpDrawer>
       </div>
       <aside
-        class="hidden shrink-0 py-4 px-2 lg:block h-full bg-black/20 border-r border-neutral-700 max-w-[200px] overflow-auto"
+        class="hidden shrink-0 py-4 px-2 lg:block h-full bg-black/20 border-r border-gray-700 max-w-[200px] overflow-auto"
       >
         <nav>
           <button
@@ -79,7 +79,7 @@
             :key="route.method + route.path"
             class="flex items-center gap-2 text-xs w-full px-2 py-2 rounded-md"
             :class="{
-              'bg-neutral-800': route.method === state.activeMethod && baseurl + route.path === state.activeRoute,
+              'bg-gray-800': route.method === state.activeMethod && baseurl + route.path === state.activeRoute,
             }"
           >
             <ApiMethod :method="route.method"></ApiMethod>
@@ -88,7 +88,7 @@
         </nav>
       </aside>
       <div class="grid grid-rows-[auto,minmax(0px,1fr)] w-full">
-        <div class="flex items-center gap-2 p-2 border-b border-neutral-700">
+        <div class="flex items-center gap-2 p-2 border-b border-gray-700">
           <SenpSelect
             class="w-32"
             v-model="state.activeMethod"
@@ -117,7 +117,7 @@
               }"
             >
               <div
-                class="border-neutral-700 bg-neutral-900/50 relative"
+                class="border-gray-700 bg-gray-900/50 relative"
                 :class="{
                   'w-4 h-full border-x-2': state.view === 'horizontal',
                   'w-full h-4 border-y-2': state.view === 'vertical',
@@ -261,7 +261,7 @@ if (props.queryKey) {
 
 <style>
 .rest-playground .splitpanes {
-  @apply bg-neutral-800;
+  @apply bg-gray-800;
 }
 
 .rest-playground .splitpanes__splitter {
@@ -285,6 +285,6 @@ if (props.queryKey) {
   width: 100%;
 }
 .rest-playground .editor .cm-editor {
-  @apply !rounded-none !bg-neutral-800/50;
+  @apply !rounded-none !bg-gray-800/50;
 }
 </style>

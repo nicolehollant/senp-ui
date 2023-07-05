@@ -2,7 +2,7 @@
   <HeadlessCombobox v-bind="$attrs" @update:model-value="(e) => $emit('update:modelValue', e)">
     <div class="relative mt-1">
       <div
-        class="relative w-full cursor-default overflow-hidden rounded-lg bg-neutral-800 text-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
+        class="relative w-full cursor-default overflow-hidden rounded-lg bg-gray-800 text-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
       >
         <HeadlessComboboxInput
           class="w-full bg-transparent border-none py-2 pl-3 pr-10 text-sm leading-5 focus:ring-0"
@@ -15,17 +15,17 @@
           "
         />
         <HeadlessComboboxButton class="absolute inset-y-0 right-0 flex items-center pr-2">
-          <Icon name="mdi:chevron-down" class="h-5 w-5 text-neutral-400" />
+          <Icon name="mdi:chevron-down" class="h-5 w-5 text-gray-400" />
         </HeadlessComboboxButton>
       </div>
       <HeadlessTransitionRoot leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
         <HeadlessComboboxOptions
           @after-leave="query = ''"
-          class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-neutral-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
         >
           <div
             v-if="filteredOptions.length === 0 && query !== ''"
-            class="relative cursor-default select-none py-2 px-4 text-neutral-400"
+            class="relative cursor-default select-none py-2 px-4 text-gray-400"
           >
             Nothing found.
           </div>
@@ -35,7 +35,7 @@
                 class="relative cursor-default select-none py-2 pl-10 pr-4"
                 :class="{
                   'bg-blue-600 text-white': active,
-                  'text-neutral-200': !active,
+                  'text-gray-200': !active,
                 }"
               >
                 <span class="block truncate" :class="{ 'font-medium': selected, 'font-normal': !selected }">
@@ -59,7 +59,7 @@
 
 <script setup lang="ts">
 import Fuse from 'fuse.js'
-import debounce from 'lodash.debounce'
+import { useDebounceFn as debounce } from '@vueuse/core'
 const props = withDefaults(
   defineProps<{
     modelValue: { label: string; value: any }

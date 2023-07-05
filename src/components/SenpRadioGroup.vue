@@ -4,9 +4,9 @@
       <HeadlessRadioGroupOption v-slot="{ checked }" :value="typeof option === 'string' ? option : option.value">
         <span
           :class="{
-            ...$xClass('cursor-pointer px-2 h-8 flex items-center justify-center bg-neutral-900', classes?.option),
+            ...$xClass('cursor-pointer px-2 h-8 flex items-center justify-center bg-gray-900', classes?.option),
             'text-blue-400': checked,
-            'text-neutral-400': !checked,
+            'text-gray-400': !checked,
             'rounded-l': i === 0,
             'rounded-r': i === options.length - 1,
             'border-r border-black/40': i < options.length - 1,

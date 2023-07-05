@@ -23,7 +23,7 @@
         v-else-if="input.type === 'separator'"
         :style="columnSpan(input, 'all')"
       >
-        <hr class="border-neutral-700" v-if="input.style === 'line'" />
+        <hr class="border-gray-700" v-if="input.style === 'line'" />
       </div>
       <template v-else-if="input.type === 'custom'">
         <slot :name="input.slotName"></slot>
@@ -161,7 +161,7 @@ const props = withDefaults(
   }
 )
 const emit = defineEmits<{
-  (event: 'submit', value: typeof props['modelValue']): void
+  (event: 'submit', value: (typeof props)['modelValue']): void
   (event: 'submit:object', value: { [k: string]: any }): void
 }>()
 

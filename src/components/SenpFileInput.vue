@@ -22,7 +22,7 @@
       for="assetsFieldHandle"
       :class="
         $xClass(
-          'group grid gap-4 rounded-2xl border-2 border-neutral-700 bg-gradient-to-br p-8 transition duration-300 cursor-pointer',
+          'group grid gap-4 rounded-2xl border-2 border-gray-700 bg-gradient-to-br p-8 transition duration-300 cursor-pointer',
           classes?.dropZone
         )
       "
@@ -30,7 +30,7 @@
       <slot name="dropzone" :draggedOver="draggedOver">
         <div class="grid gap-2 text-center">
           <p>Drag and drop to upload</p>
-          <p class="text-xs text-neutral-500">or</p>
+          <p class="text-xs text-gray-500">or</p>
           <p>
             <span class="text-blue-300 transition duration-200 group-hover:text-blue-400 group-hover:underline"
               >click</span
@@ -41,7 +41,7 @@
       </slot>
       <slot name="files" :fnames="fnames" :removeFiles="removeFiles">
         <div class="flex flex-col gap-4 items-start pt-3 relative z-30" v-if="fnames?.length && !hideFiles">
-          <ul class="p-2 rounded-lg bg-neutral-800/40 space-y-1">
+          <ul class="p-2 rounded-lg bg-gray-800/40 space-y-1">
             <li v-for="(name, index) in fnames" :key="name" class="flex items-center gap-4 justify-between w-full">
               <p>
                 {{ name }}
@@ -200,9 +200,9 @@ watch(
 
 <style lang="postcss">
 .drop-zone-default {
-  @apply bg-gradient-to-br transition duration-300 bg-neutral-900 from-neutral-800;
+  @apply bg-gradient-to-br transition duration-300 bg-gray-900 from-gray-800;
 }
 .drop-zone-active {
-  @apply bg-gradient-to-br transition duration-300 bg-blue-900 from-neutral-800;
+  @apply bg-gradient-to-br transition duration-300 bg-blue-900 from-gray-800;
 }
 </style>

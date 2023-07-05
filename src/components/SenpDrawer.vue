@@ -51,7 +51,7 @@
             "
           >
             <HeadlessDialogPanel
-              class="relative flex overflow-auto transform flex-col gap-6 bg-neutral-800 text-left align-middle shadow-xl transition-all"
+              class="relative flex overflow-auto transform flex-col gap-6 bg-gray-800 text-left align-middle shadow-xl transition-all"
               :class="
                 $xClass(
                   side === 'left' || side === 'right'
@@ -63,7 +63,7 @@
             >
               <slot name="title">
                 <div
-                  class="flex items-center justify-between sticky top-0 bg-neutral-800/50 backdrop-blur shadow p-6 text-lg leading-6"
+                  class="flex items-center justify-between sticky top-0 bg-gray-800/50 backdrop-blur shadow p-6 text-lg leading-6"
                   v-if="title"
                 >
                   <HeadlessDialogTitle as="h3" class="font-medium">

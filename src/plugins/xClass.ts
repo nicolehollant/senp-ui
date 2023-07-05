@@ -1,3 +1,5 @@
+import { CxOptions, cva, cx } from 'class-variance-authority'
+import { twMerge } from 'tailwind-merge'
 export type XClass = {
   extend?: string
   base?: string
@@ -11,7 +13,10 @@ export default defineNuxtPlugin((nuxtApp) => {
   }
   return {
     provide: {
-      xClass: extendClasses,
+      cva: cva,
+      cx: <T extends CxOptions>(...classes: T) => twMerge(cx(classes)),
+      // xClass: extendClasses,
+      classes: extendClasses,
     },
   }
 })

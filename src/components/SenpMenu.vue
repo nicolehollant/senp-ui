@@ -15,7 +15,7 @@
       leave-to-class="transform scale-75 opacity-0"
     >
       <HeadlessMenuItems
-        class="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-neutral-800 shadow-lg ring-1 ring-neutral-500 ring-opacity-60 focus:outline-none"
+        class="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-gray-800 shadow-lg ring-1 ring-gray-500 ring-opacity-60 focus:outline-none"
       >
         <div class="px-1 py-1">
           <slot name="items">
@@ -23,7 +23,7 @@
               <button
                 @click="$emit('select', option.emits)"
                 :class="[
-                  active ? 'bg-blue-700/50 text-white' : 'text-neutral-200',
+                  active ? 'bg-blue-700/50 text-white' : 'text-gray-200',
                   'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                 ]"
               >

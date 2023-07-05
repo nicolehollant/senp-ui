@@ -2,7 +2,7 @@
   <component
     v-if="type === 'media-top'"
     :is="as"
-    :class="$xClass('flex flex-col gap-4 px-4 pb-4 rounded-lg bg-neutral-900', classes?.wrapper)"
+    :class="$xClass('flex flex-col gap-4 px-4 pb-4 rounded-lg bg-gray-900', classes?.wrapper)"
     v-bind="$attrs"
   >
     <slot name="media"></slot>
@@ -11,7 +11,7 @@
   <component
     v-else-if="type === 'header'"
     :is="as"
-    :class="$xClass('flex flex-col gap-4 p-4 rounded-lg bg-neutral-900', classes?.wrapper)"
+    :class="$xClass('flex flex-col gap-4 p-4 rounded-lg bg-gray-900', classes?.wrapper)"
     v-bind="$attrs"
   >
     <slot name="title">
@@ -22,7 +22,7 @@
   <component
     v-else
     :is="as"
-    :class="$xClass('flex flex-col gap-4 p-4 rounded-lg bg-neutral-900', classes?.wrapper)"
+    :class="$xClass('flex flex-col gap-4 p-4 rounded-lg bg-gray-900', classes?.wrapper)"
     v-bind="$attrs"
     ><slot></slot
   ></component>

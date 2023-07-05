@@ -8,7 +8,7 @@
           'rounded-r': i === options.length - 1,
           'border-r border-black/40': i < options.length - 1,
           ...$xClass(
-            'cursor-pointer px-2 h-8 flex items-center justify-center bg-neutral-900 text-neutral-400',
+            'cursor-pointer px-2 h-8 flex items-center justify-center bg-gray-900 text-gray-400',
             classes?.button
           ),
         }"

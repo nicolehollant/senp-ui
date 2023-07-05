@@ -7,7 +7,7 @@
       <p
         :class="
           $xClass(
-            'w-max p-1.5 text-xs bg-black/40 rounded-lg absolute top-2 right-2 font-medium text-neutral-400',
+            'w-max p-1.5 text-xs bg-black/40 rounded-lg absolute top-2 right-2 font-medium text-gray-400',
             classes?.title
           )
         "
@@ -21,7 +21,7 @@
         @click="() => copy(value ?? '')"
         :class="
           $xClass(
-            'group-hover:flex group-hover:opacity-100 opacity-0 hidden w-8 p-1.5 h-8 items-center justify-center text-lg bg-black/40 rounded-lg absolute bottom-2 right-2 text-neutral-400 transition duration-500',
+            'group-hover:flex group-hover:opacity-100 opacity-0 hidden w-8 p-1.5 h-8 items-center justify-center text-lg bg-black/40 rounded-lg absolute bottom-2 right-2 text-gray-400 transition duration-500',
             classes?.clipboard
           )
         "
@@ -35,21 +35,16 @@
 </template>
 
 <script setup lang="ts">
-import '../assets/css/hljs-defaults.css'
-// import hljs from 'highlight.js'
-import hljs from 'highlight.js/lib/common'
-
-// import { default as hljs } from 'highlight.js'
 import { XClass } from '../plugins/xClass'
 import { useClipboard } from '@vueuse/core'
 
-// const hljs = await import('highlight.js')
+const { $shiki } = useNuxtApp()
+
 const props = withDefaults(
   defineProps<{
     value: string
-    theme?: 'atom-dark' | 'gh-light' | 'gh-dark' | ''
-    language: 'json' | 'typescript' | 'javascript' | 'python' | 'html' | 'c' | 'bash' | 'latex' | 'sql' | ''
-    autodetect?: boolean
+    theme?: 'nord' | ''
+    language: 'json' | 'typescript' | 'javascript' | 'js' | 'python' | 'html' | 'c' | 'bash' | 'latex' | 'sql' | ''
     clipboard?: boolean
     title?: string
     classes?: {
@@ -76,23 +71,27 @@ watch(
 )
 
 const className = computed((): string => {
-  return `hljs ${language.value}`
+  return `shiki ${props.theme} ${language.value}`
 })
 
-const highlightedCode = computed((): string => {
-  if (props.autodetect) {
-    const result = hljs.highlightAuto(props.value)
-    language.value = result.language ?? ''
-    return result.value
-  } else {
-    const result = hljs.highlight(props.value, {
-      language: language.value,
-    })
-    return result.value
-  }
-})
+const highlightCode = async () => {
+  highlightedCode.value = await $shiki.renderCustom({
+    tokens: props.value,
+    lang: props.language,
+    theme: props.theme,
+  })
+}
 
-const { text, copy, copied, isSupported } = useClipboard({
+const highlightedCode = ref(props.value)
+watch(
+  () => props.value,
+  () => {
+    highlightCode()
+  },
+  { immediate: true }
+)
+
+const { copy, copied } = useClipboard({
   legacy: true,
 })
 </script>

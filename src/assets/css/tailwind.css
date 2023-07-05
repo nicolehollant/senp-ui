@@ -19,7 +19,7 @@ body, html {
 body,
 html,
 #__nuxt {
-  @apply h-full w-full bg-black text-white overflow-auto bg-gradient-to-br from-black to-neutral-900;
+  @apply h-full w-full bg-black text-white overflow-auto bg-gradient-to-br from-gray-950 to-gray-900;
 }
 
 .animation-duration-500 {
@@ -73,4 +73,28 @@ html,
 }
 .animation-timing-linear {
   --animation-timing-fn: linear
+}
+
+.fable-aside {
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(0px,1fr);
+  padding-bottom: 0px !important;
+}
+.fable-aside nav {
+  height: 100%;
+  overflow: auto;
+  display: flex !important;
+  flex-direction: column;
+  padding-bottom: 4rem;
+}
+
+.fable-canvas .prose {
+  max-width: 100%;
+}
+.fable-canvas .table-wrapper table {
+  margin:0;
+}
+.fable-canvas .table-wrapper pre {
+  background-color: transparent;
 }

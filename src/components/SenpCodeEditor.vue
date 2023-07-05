@@ -160,7 +160,7 @@ const extensions = [
   ...languageMap[props.language],
   EditorView.lineWrapping,
   syntaxHighlighting(defaultHighlightStyle),
-  ...props.extensions.map((a) => Prec.highest(a)),
+  ...(props.extensions || []).map((a) => Prec.highest(a)),
 ]
 if (props.theme === 'onedark') {
   extensions.push(Prec.highest(oneDark))

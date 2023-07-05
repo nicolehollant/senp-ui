@@ -7,7 +7,7 @@
       <p
         :class="
           $xClass(
-            'w-max p-1.5 text-xs bg-black/40 rounded-lg absolute top-2 right-2 font-medium text-neutral-400',
+            'w-max p-1.5 text-xs bg-black/40 rounded-lg absolute top-2 right-2 font-medium text-gray-400',
             classes?.title
           )
         "
@@ -21,7 +21,7 @@
         @click="() => copy(value ?? '')"
         :class="
           $xClass(
-            'group-hover:flex group-hover:opacity-100 opacity-0 hidden w-8 p-1.5 h-8 items-center justify-center text-lg bg-black/40 rounded-lg absolute bottom-2 right-2 text-neutral-400 transition duration-500',
+            'group-hover:flex group-hover:opacity-100 opacity-0 hidden w-8 p-1.5 h-8 items-center justify-center text-lg bg-black/40 rounded-lg absolute bottom-2 right-2 text-gray-400 transition duration-500',
             classes?.clipboard
           )
         "

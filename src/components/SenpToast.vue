@@ -7,7 +7,7 @@
   >
     <div class="flex items-center justify-between">
       <p v-if="title" class="font-medium text-sm">{{ title }}</p>
-      <button @click="close" class="ml-auto p-1 rounded hover:bg-neutral-700/20"><Icon name="mdi:close"></Icon></button>
+      <button @click="close" class="ml-auto p-1 rounded hover:bg-gray-700/20"><Icon name="mdi:close"></Icon></button>
     </div>
     <p v-if="content">{{ content }}</p>
   </div>

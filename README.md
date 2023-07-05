@@ -1,44 +1,48 @@
 # senp-ui
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+stuff
 
-## Setup
+## Todo:
 
-Make sure to install the dependencies:
+- [ ] add https://vue3datepicker.com/
+- [ ] make this a module instead of a layer
+- [ ] create templatable things for targetting colors
+- [ ] create common props ???
+- [ ] make this a monorepo
+- [ ] steal app config ideas from nuxt 😅
+- [ ] add docs
+  - [ ] document components
+  - [ ] provide examples
 
-```bash
-# yarn
-yarn install
+## Component Roadmap
 
-# npm
-npm install
+- [ ] utility
+  - [ ] button
+  - [ ] tag
+  - [ ] avatar
+  - [ ] menu
+  - [ ] forms
+  - [ ] modal
+  - [ ] drawer
+  - [ ] skeleton
+  - [ ] notifications
+  - [ ] card
+- [ ] inputs
+  - [ ] text
+  - [ ] textarea
+  - [ ] checkbox
+  - [ ] toggle
+  - [ ] radiogroup
+  - [ ] select
+  - [ ] combobox
+  - [ ] calendar
+  - [ ] formgroup
+- [ ] presentation
+  - [ ] container
+  - [ ] stack
+  - [ ] row
+  - [ ] table
 
-# pnpm
-pnpm install --shamefully-hoist
-```
+## Composable Roadmap
 
-## Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-
-<!-- // removed "type": "module" -->
+- [ ] useMediaQuery or something for responsive variants

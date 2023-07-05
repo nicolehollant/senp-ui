@@ -3,18 +3,18 @@
     <div :class="$xClass(labelSide === 'top' ? 'grid gap-1' : 'flex items-center gap-2', classes?.labelWrapper)">
       <template v-if="labelSide !== 'right'">
         <slot name="label">
-          <p :class="$xClass('text-sm text-neutral-50', classes?.label)" v-if="label">{{ label }}</p>
+          <p :class="$xClass('text-sm text-gray-50', classes?.label)" v-if="label">{{ label }}</p>
         </slot>
       </template>
       <HeadlessSwitch
-        :model-value="modelValue"
-        @update:model-value="(v) => $emit('update:modelValue', v)"
+        :modelValue="modelValue"
+        @update:modelValue="(v) => $emit('update:modelValue', v)"
         :class="{
           ...(modelValue
-            ? $xClass('bg-blue-600', classes?.inputActive)
-            : $xClass('bg-neutral-800', classes?.inputInactive)),
+            ? $xClass('!bg-blue-600', classes?.inputActive)
+            : $xClass('!bg-gray-800', classes?.inputInactive)),
           ...$xClass(
-            'rounded-lg  flex items-center justify-center border border-neutral-700 ' +
+            'rounded-lg  flex items-center justify-center border border-gray-700 ' +
               (size === 'input' ? 'w-[42px] h-[42px] text-2xl' : 'w-8 h-8 text-lg'),
             classes?.input
           ),
@@ -24,12 +24,12 @@
       </HeadlessSwitch>
       <template v-if="labelSide === 'right'">
         <slot name="label">
-          <p :class="$xClass('text-sm text-neutral-50', classes?.label)" v-if="label">{{ label }}</p>
+          <p :class="$xClass('text-sm text-gray-50', classes?.label)" v-if="label">{{ label }}</p>
         </slot>
       </template>
     </div>
     <slot name="hint">
-      <p :class="$xClass('text-xs italic text-neutral-300', classes?.hint)" v-if="hint">{{ hint }}</p>
+      <p :class="$xClass('text-xs italic text-gray-300', classes?.hint)" v-if="hint">{{ hint }}</p>
     </slot>
     <slot name="error">
       <p :class="$xClass('text-sm text-red-300', classes?.error)" v-if="error">{{ error }}</p>

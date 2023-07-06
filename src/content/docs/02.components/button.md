@@ -164,3 +164,16 @@ props:
   loadingIcon: mdi:loading
 ---
 ::
+
+<hr class="my-20">
+
+## Component API
+
+::AutoStoryPreview
+---
+storyGroup: auto-stories
+storyName: senp-button
+initialControls:
+  label: Hello World
+---
+::

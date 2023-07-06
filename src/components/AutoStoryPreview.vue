@@ -1,0 +1,79 @@
+<template>
+  <p v-if="Comp == null">Component not found 😕</p>
+  <ComponentExamplePreview v-else :docgenInfo="story?.component?.__docgenInfo" :story="story"></ComponentExamplePreview>
+</template>
+
+<script setup lang="tsx">
+import { getStories } from '#stories'
+
+const props = defineProps<{
+  storyName: string
+  storyGroup: string
+}>()
+
+const tryParseOrEmptyObject = (val: string) => {
+  try {
+    return JSON.parse(val)
+  } catch (error) {
+    return {}
+  }
+}
+
+const kebabCase = (str: string) =>
+  str
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase()
+
+const route = useRoute()
+
+const stories = getStories()
+
+/**
+ * use this if you're using resolving vue as 'vue/dist/vue.esm-bundler.js'
+ */
+const mapSlotsWithTemplate = ([key, value]: [string, unknown]) => {
+  return [
+    key,
+    () => {
+      try {
+        return h(
+          defineComponent({
+            template: value + '',
+          })
+        )
+      } catch (error) {
+        return value
+      }
+    },
+  ]
+}
+
+const story = computed(() => {
+  for (const [storyGroup, storyExports] of Object.entries(stories)) {
+    for (const [storyName, story] of Object.entries(storyExports)) {
+      if (
+        [kebabCase(props.storyGroup), kebabCase(props.storyName)].join('_') ===
+        [kebabCase(storyGroup), kebabCase(storyName)].join('_')
+      ) {
+        return story
+      }
+    }
+  }
+  return null
+})
+
+const Comp = computed(() => {
+  const controls = tryParseOrEmptyObject(route.query.controls + '')
+  const slots = Object.fromEntries(
+    Object.entries(tryParseOrEmptyObject(route.query.slots + '')).map(mapSlotsWithTemplate)
+  )
+  if (story.value) {
+    return story.value.render({
+      props: { ...story.value.args, ...controls },
+      slots: { ...story.value.slots, ...slots },
+    } as any)
+  }
+  return null
+})
+</script>

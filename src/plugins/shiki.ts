@@ -5,7 +5,7 @@ export default defineNuxtPlugin(() => {
   const initHighlighter = async () => {
     const highlighter = await getHighlighter({
       theme: 'nord',
-      langs: ['javascript', 'python'],
+      langs: ['javascript', 'python', 'vue', 'vue-html', 'html', 'typescript'],
     })
     return highlighter
   }

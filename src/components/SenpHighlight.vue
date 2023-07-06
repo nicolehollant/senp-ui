@@ -44,7 +44,7 @@ const props = withDefaults(
   defineProps<{
     value: string
     theme?: 'nord' | ''
-    language: 'json' | 'typescript' | 'javascript' | 'js' | 'python' | 'html' | 'c' | 'bash' | 'latex' | 'sql' | ''
+    language: 'javascript' | 'python' | 'vue' | 'vue-html' | 'html' | 'typescript' | ''
     clipboard?: boolean
     title?: string
     classes?: {

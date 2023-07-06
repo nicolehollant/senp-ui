@@ -25,7 +25,7 @@
     <div class="px-4 py-8 mx-auto w-full">
       <main
         id="prose-content"
-        class="prose prose-invert mx-auto !max-w-3xl [&_.not-prose_pre]:!my-0 [&_.not-prose_pre]:!p-0 prose-code:p-1 prose-code:bg-gray-800 prose-code:rounded-md prose-code:after:content-none prose-code:before:content-none prose-code:border prose-code:border-gray-700"
+        class="prose prose-invert mx-auto !max-w-4xl [&_.not-prose_pre]:!my-0 [&_.not-prose_pre]:!p-0 prose-code:p-1 prose-code:bg-gray-800 prose-code:rounded-md prose-code:after:content-none prose-code:before:content-none prose-code:border prose-code:border-gray-700"
       >
         <p class="capitalize text-sm font-medium text-blue-400">{{ activeDirectory }}</p>
         <ContentDoc />
@@ -65,7 +65,7 @@
         <p class="py-12 text-sm text-gray-400">👩‍💻💚 nicole</p>
       </main>
     </div>
-    <div class="w-40 pr-4 sticky top-16 py-8 max-h-[calc(100vh-4rem)] overflow-auto">
+    <div class="w-40 px-4 sticky top-16 py-8 max-h-[calc(100vh-4rem)] overflow-auto">
       <DocsToc :value="data?.body?.toc" v-if="data?.body?.toc?.links?.length"></DocsToc>
     </div>
   </div>

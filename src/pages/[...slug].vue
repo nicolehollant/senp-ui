@@ -177,28 +177,28 @@ const { data } = await useAsyncData(`content-${path}`, () => {
     .findOne()
 })
 
-watch(
-  data,
-  () => {
-    if (hash) {
-      setTimeout(() => {
-        nextTick(() => {
-          console.log('ahgvsdhiufjoalksmdf', hash)
-          const el = document.querySelector(hash)
-          if (el) {
-            document.querySelector('#__nuxt')?.scrollTo({
-              top: (el as HTMLDivElement)?.offsetTop - (window.innerWidth > 1024 ? 40 : 64),
-              behavior: 'smooth',
-            })
-          }
-        })
-      }, 800)
-    } else {
-      document.querySelector('#__nuxt')?.scrollTo({ top: 0 })
-    }
-  },
-  { deep: true, immediate: true }
-)
+const scrollToStuff = () => {
+  if (!document) {
+    return
+  }
+  if (hash) {
+    setTimeout(() => {
+      nextTick(() => {
+        console.log('ahgvsdhiufjoalksmdf', hash)
+        const el = document.querySelector(hash)
+        if (el) {
+          document.querySelector('#__nuxt')?.scrollTo({
+            top: (el as HTMLDivElement)?.offsetTop - (window.innerWidth > 1024 ? 40 : 64),
+            behavior: 'smooth',
+          })
+        }
+      })
+    }, 800)
+  } else {
+    document.querySelector('#__nuxt')?.scrollTo({ top: 0 })
+  }
+}
+watch(data, scrollToStuff, { deep: true })
 </script>
 
 <style>

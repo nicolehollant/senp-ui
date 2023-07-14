@@ -55,11 +55,20 @@
     </div>
 
     <div v-if="state.mode === 'code'" class="not-prose bg-gray-950 rounded-xl">
-      <SenpHighlight language="vue" theme="nord" :value="codePreview"></SenpHighlight>
+      <SenpHighlight
+        :classes="{ pre: { extend: '!overflow-visible' } }"
+        language="vue"
+        theme="nord"
+        :value="codePreview"
+      ></SenpHighlight>
     </div>
 
     <div v-if="state.mode === 'props' && filteredProps" class="not-prose">
-      <DataTable :rows="filteredProps" :columns="['Name', 'Description', 'Controls']">
+      <DataTable
+        class="max-h-[36rem] [&_thead]:ring-1 [&_thead]:ring-gray-700 [&_table]:max-h-[36rem] [&_table]:overflow-auto [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-40"
+        :rows="filteredProps"
+        :columns="['Name', 'Description', 'Controls']"
+      >
         <tr v-for="(row, i) in filteredProps" :key="'row-' + i">
           <td>
             <div>
@@ -101,7 +110,11 @@
     </div>
 
     <div v-if="state.mode === 'slots' && filteredSlots" class="not-prose">
-      <DataTable :rows="filteredSlots" :columns="['Name', 'Description', 'Bindings', 'Controls']">
+      <DataTable
+        class="max-h-[36rem] [&_thead]:ring-1 [&_thead]:ring-gray-700 [&_table]:max-h-[36rem] [&_table]:overflow-auto [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-40"
+        :rows="filteredSlots"
+        :columns="['Name', 'Description', 'Bindings', 'Controls']"
+      >
         <tr v-for="(row, i) in filteredSlots" :key="'row-' + i">
           <td>
             {{ row.name }}
@@ -191,10 +204,12 @@ const props = withDefaults(
     story: Story<any>
     initialSlots: any
     initialControls: any
+    handleModels: Record<string, string>
   }>(),
   {
     initialSlots: {},
     initialControls: {},
+    handleModels: () => ({}),
   }
 )
 
@@ -419,8 +434,22 @@ const Comp = computed(() => {
       .filter(([_, val]) => val != null)
       .map(mapSlotsWithTemplate)
   )
+  const handleModels = Object.fromEntries(
+    Object.entries(props.handleModels).map(([eventKey, controlKey]) => {
+      return [
+        eventKey,
+        (v: unknown) => {
+          query.controls[controlKey] = v
+        },
+      ]
+    })
+  )
   return props.story.docs.render.defaultRenderer({
-    props: { ...props.story.docs.render.args, ...query.controls },
+    props: {
+      ...props.story.docs.render.args,
+      ...query.controls,
+      ...handleModels,
+    },
     slots: { ...props.story.docs.render.slots, ...slots },
   } as any)
 })

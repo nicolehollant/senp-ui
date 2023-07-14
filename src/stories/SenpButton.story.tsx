@@ -4,7 +4,7 @@ export default defineStory({
   component: SenpButton,
   title: 'SenpButton: default',
   args: {
-    theme: 'primary',
+    intent: 'primary',
   },
   slotArgs: {
     default: () => <div>some slot content</div>,

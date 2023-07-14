@@ -79,6 +79,7 @@ const props = withDefaults(
     }
   }>(),
   {
+    readAs: 'text',
     hideFiles: false,
     multiple: false,
   }
@@ -92,6 +93,10 @@ const draggedOver = ref(false)
 
 const processFile = (file: any) =>
   new Promise((resolve, reject) => {
+    if (!file) {
+      resolve(null)
+      return
+    }
     const reader = new FileReader()
     const _readAs = {
       'binary-string': () => {
@@ -117,6 +122,7 @@ const processFile = (file: any) =>
 
 async function updateInputHandler() {
   if (!inputRef.value) {
+    emit('update:modelValue', null)
     return
   }
   if (props.multiple) {
@@ -139,6 +145,10 @@ async function updateInputHandler() {
     }
   } else {
     const file = (inputRef.value as any).files[0]
+    if (!file) {
+      emit('update:modelValue', null)
+      return
+    }
     fnames.value = [file.name]
     if (props.readAs === 'file') {
       emit('update:modelValue', file)

@@ -15,9 +15,10 @@
         classes?.button
       )
     "
-    :disabled="disabled"
+    :disabled="loading || disabled"
     :aria-label="ariaLabel"
     v-bind="$attrs"
+    :tabindex="tabindex"
   >
     <slot name="leading" :disabled="disabled" :loading="loading">
       <Icon
@@ -49,20 +50,72 @@ import { ClassValue } from 'class-variance-authority/dist/types'
 
 const props = withDefaults(
   defineProps<{
+    /**
+     * makes the button render as a NuxtLink with `to`
+     */
     to?: string
+    /**
+     * label for button (in place of using default slot)
+     */
     label?: string
+    /**
+     * aria label
+     */
     ariaLabel?: string
+    /**
+     * whether or not to truncate the button content
+     */
     truncate?: boolean
+    /**
+     * render as display block rather than inline-flex, intended to be used when truncate is true
+     */
     block?: boolean
+    /**
+     * whether or not the button is unable to be pressed
+     */
     disabled?: boolean
+    /**
+     * gives equal padding on all sides of the button
+     */
     square?: boolean
+    /**
+     * leading icon, supports any iconify icon
+     */
     leading?: string
+    /**
+     * trailing icon, supports any iconify icon
+     */
     trailing?: string
+    /**
+     * loading icon, supports any iconify icon, shows when `loading` is true and has a spin animation applied
+     */
     loadingIcon?: string
+    /**
+     * whether or not the button is loading, automatically disable the button when loading
+     */
     loading?: boolean
+    /**
+     * tabindex of button
+     */
+    tabindex?: string
+    /**
+     * button theme
+     */
     intent?: 'primary' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'link' | null | undefined
+    /**
+     * button size
+     */
     size?: '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined | null
+    /**
+     * button corner radius
+     */
     rounded?: 'sm' | 'md' | 'lg' | 'full' | 'none' | null | undefined
+    /**
+     * button style overrides
+     * - button: applies to button
+     * - trailing: applies to trailing icon
+     * - leading: applies to leading icon
+     */
     classes?: {
       button?: ClassValue
       trailing?: ClassValue
@@ -74,12 +127,13 @@ const props = withDefaults(
     size: 'md',
     rounded: 'md',
     loadingIcon: 'mdi:loading',
+    tabindex: '0',
   }
 )
 
 const buttonIs = computed(() => {
   if (props.to) {
-    return 'NuxtLink'
+    return resolveComponent('NuxtLink')
   }
 
   return 'button'

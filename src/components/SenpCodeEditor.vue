@@ -4,10 +4,10 @@
     @update:model-value="(v) => $emit('update:modelValue', v)"
     :placeholder="($attrs.placeholder as any) || ''"
     :style="{ height: 'auto' }"
-    :autofocus="true"
+    :autofocus="autofocus"
     :indent-with-tab="true"
     :tab-size="2"
-    :extensions="extensions"
+    :extensions="_extensions"
     :disabled="disabled"
     @ready="handleReady"
   ></Codemirror>
@@ -30,12 +30,36 @@ import { defaultHighlightStyle, HighlightStyle, syntaxHighlighting } from '@code
 
 const props = withDefaults(
   defineProps<{
+    /**
+     * v-model capable
+     */
     modelValue: string
+    /**
+     * action that happens when hitting the "enter" key
+     * - submit: emit "submit" (must use shift+enter for new lines)
+     * - default: add a new line
+     */
     enterAction: 'submit' | 'default'
+    /**
+     * language of editor
+     */
     language: keyof typeof languageMap
+    /**
+     * code mirror extensions
+     */
     extensions?: Extension[]
+    /**
+     * code editor theme
+     */
     theme?: 'default' | 'onedark'
+    /**
+     * whether or not the editor is disabled
+     */
     disabled?: boolean
+    /**
+     * whether or not the editor is focused automatically
+     */
+    autofocus?: boolean
   }>(),
   {
     modelValue: '',
@@ -44,6 +68,7 @@ const props = withDefaults(
     language: 'markdown',
     extensions: () => [],
     disabled: false,
+    autofocus: false,
   }
 )
 
@@ -153,18 +178,21 @@ const languageMap = {
   json: [Prec.high(json())],
 }
 
-const extensions = [
-  basicSetup,
-  Prec.high(keyDownExt),
-  Prec.high(keymap.of(customKeyMap)),
-  ...languageMap[props.language],
-  EditorView.lineWrapping,
-  syntaxHighlighting(defaultHighlightStyle),
-  ...(props.extensions || []).map((a) => Prec.highest(a)),
-]
-if (props.theme === 'onedark') {
-  extensions.push(Prec.highest(oneDark))
-}
+const _extensions = computed(() => {
+  const result = [
+    basicSetup,
+    Prec.high(keyDownExt),
+    Prec.high(keymap.of(customKeyMap)),
+    ...languageMap[props.language],
+    EditorView.lineWrapping,
+    syntaxHighlighting(defaultHighlightStyle),
+    ...(props.extensions || []).map((a) => Prec.highest(a)),
+  ]
+  if (props.theme === 'onedark') {
+    result.push(Prec.highest(oneDark))
+  }
+  return result
+})
 const view = shallowRef()
 const handleReady = (payload: any) => {
   view.value = payload.view
@@ -178,6 +206,7 @@ const handleReady = (payload: any) => {
 .cm-editor {
   padding: 0.5rem;
   border-radius: 8px;
+  border: 1px solid theme('colors.gray.700');
 }
 .cm-scroller {
   font-family: Inter !important;

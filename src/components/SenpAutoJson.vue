@@ -117,10 +117,21 @@ type AutoJsonRenderOption = AutoJsonRenderObjectOption | AutoJsonRenderArrayOpti
 
 const props = withDefaults(
   defineProps<{
+    /**
+     * value to render
+     */
     value: JSONValue
-    nestLevel?: number
+    /**
+     * dont pass this, it's for recursive stuff :)
+     */
     rootValue?: JSONValue
+    /**
+     * parent key of value to render
+     */
     parentKey?: string
+    /**
+     * rendering options
+     */
     renderAs?: {
       [dotpath: string]: AutoJsonRenderOption
     }
@@ -128,7 +139,6 @@ const props = withDefaults(
   {
     parentKey: '',
     value: null,
-    nestLevel: 1,
   }
 )
 

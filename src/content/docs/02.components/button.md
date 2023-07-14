@@ -1,3 +1,7 @@
+---
+description: Render a button with various themes and options for icons and links
+---
+
 # Button
 
 It's cute as a button 🥰

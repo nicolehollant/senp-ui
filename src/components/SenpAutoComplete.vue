@@ -1,5 +1,9 @@
 <template>
-  <HeadlessCombobox v-bind="$attrs" @update:model-value="(e) => $emit('update:modelValue', e)">
+  <HeadlessCombobox
+    v-bind="$attrs"
+    :model-value="modelValue"
+    @update:model-value="(e) => $emit('update:modelValue', e)"
+  >
     <div class="relative mt-1">
       <div
         class="relative w-full cursor-default overflow-hidden rounded-lg bg-gray-800 text-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
@@ -21,7 +25,7 @@
       <HeadlessTransitionRoot leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
         <HeadlessComboboxOptions
           @after-leave="query = ''"
-          class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-800 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
         >
           <div
             v-if="filteredOptions.length === 0 && query !== ''"
@@ -62,10 +66,26 @@ import Fuse from 'fuse.js'
 import { useDebounceFn as debounce } from '@vueuse/core'
 const props = withDefaults(
   defineProps<{
+    /**
+     * model for autocomplete
+     */
     modelValue: { label: string; value: any }
+    /**
+     * list of options
+     */
     options: { label: string; value: any }[]
+    /**
+     * fields to search on
+     */
     keyFields?: string[]
+    /**
+     * function to display a value based on the selected value
+     */
     displayValue?: (v: any) => string
+    /**
+     * - sort: include all items sorted by priority
+     * - filter: include items within a threshold
+     */
     mode?: 'filter' | 'sort'
   }>(),
   {

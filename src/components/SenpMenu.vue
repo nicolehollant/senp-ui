@@ -15,7 +15,12 @@
       leave-to-class="transform scale-75 opacity-0"
     >
       <HeadlessMenuItems
-        class="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-gray-800 shadow-lg ring-1 ring-gray-500 ring-opacity-60 focus:outline-none"
+        :class="{
+          'left-0 origin-top-left': side === 'left',
+          'left-1/2 transform -translate-x-1/2 origin-top': side === 'center',
+          'right-0 origin-top-right': side === 'right',
+        }"
+        class="absolute mt-2 w-56 rounded-md bg-gray-800 shadow-lg ring-1 ring-gray-500 ring-opacity-60 focus:outline-none"
       >
         <div class="px-1 py-1">
           <slot name="items">
@@ -38,9 +43,15 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  options?: { label: string; emits: string }[]
-}>()
+withDefaults(
+  defineProps<{
+    options?: { label: string; emits: string }[]
+    side?: 'right' | 'left' | 'center'
+  }>(),
+  {
+    side: 'right',
+  }
+)
 defineEmits<{
   (event: 'select', key: string): void
 }>()

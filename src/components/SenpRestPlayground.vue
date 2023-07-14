@@ -12,7 +12,7 @@
         base: 'hidden',
       },
     }"
-    class="bg-gray-900"
+    class="bg-gray-900 max-h-screen overflow-hidden"
   >
     <template #header>
       <h1 class="text-lg lg:text-xl">{{ title }}</h1>
@@ -141,14 +141,14 @@
                   ></div>
                 </div>
               </div>
-              <SenpHljsHighlight
+              <SenpHighlight
                 title="response"
                 class="h-full w-full overflow-hidden"
                 :classes="{ pre: { extend: '!overflow-auto h-full' } }"
                 language="json"
-                theme="atom-dark"
+                theme="nord"
                 :value="response"
-              ></SenpHljsHighlight>
+              ></SenpHighlight>
             </div>
           </pane>
         </splitpanes>

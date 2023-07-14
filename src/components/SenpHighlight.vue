@@ -18,14 +18,14 @@
     </slot>
     <slot name="clipboard">
       <button
-        @click="() => copy(value ?? '')"
+        @click="() => copy(stringValue ?? '')"
         :class="
           $xClass(
             'group-hover:flex group-hover:opacity-100 opacity-0 hidden w-8 p-1.5 h-8 items-center justify-center text-lg bg-black/40 rounded-lg absolute bottom-2 right-2 text-gray-400 transition duration-500',
             classes?.clipboard
           )
         "
-        v-if="clipboard && value"
+        v-if="clipboard && stringValue"
       >
         <Icon v-if="copied" name="mdi:clipboard-check-outline" />
         <Icon v-else name="mdi:clipboard-outline" />
@@ -42,11 +42,12 @@ const { $shiki } = useNuxtApp()
 
 const props = withDefaults(
   defineProps<{
-    value: string
+    value: string | object
     theme?: 'nord' | ''
-    language: 'javascript' | 'python' | 'vue' | 'vue-html' | 'html' | 'typescript' | ''
+    language: 'javascript' | 'python' | 'vue' | 'vue-html' | 'html' | 'typescript' | 'json' | 'bash' | ''
     clipboard?: boolean
     title?: string
+    indent?: number
     classes?: {
       wrapper?: XClass
       pre?: XClass
@@ -56,11 +57,19 @@ const props = withDefaults(
     }
   }>(),
   {
-    theme: '',
+    theme: 'nord',
     clipboard: true,
     autodetect: false,
+    indent: 2,
   }
 )
+
+const stringValue = computed(() => {
+  if (typeof props.value === 'string') {
+    return props.value
+  }
+  return JSON.stringify(props.value, null, props.indent)
+})
 
 const language = ref<string>(props.language)
 watch(
@@ -76,15 +85,15 @@ const className = computed((): string => {
 
 const highlightCode = async () => {
   highlightedCode.value = await $shiki.renderCustom({
-    tokens: props.value,
+    tokens: stringValue.value,
     lang: props.language,
     theme: props.theme,
   })
 }
 
-const highlightedCode = ref(props.value)
+const highlightedCode = ref(stringValue.value)
 watch(
-  () => props.value,
+  () => stringValue.value,
   () => {
     highlightCode()
   },

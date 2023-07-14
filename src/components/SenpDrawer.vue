@@ -55,7 +55,7 @@
               :class="
                 $xClass(
                   side === 'left' || side === 'right'
-                    ? 'w-full max-h-full max-w-[90vw] md:max-w-6xl'
+                    ? 'w-full max-h-full max-w-[90vw] lg:max-w-4xl xl:max-w-6xl' + (fitContent ? ' h-auto' : ' h-full')
                     : 'w-full max-h-[80vh]',
                   classes?.maxSize
                 )
@@ -74,7 +74,7 @@
                   </button>
                 </div>
               </slot>
-              <div class="px-6 pb-6">
+              <div class="px-6 pb-6 h-full">
                 <slot></slot>
               </div>
               <div v-if="!title">
@@ -103,11 +103,13 @@ withDefaults(
     open: boolean
     title?: string
     side?: 'left' | 'right' | 'bottom' | 'top'
+    fitContent?: boolean
     classes?: {
       maxSize: XClass
     }
   }>(),
   {
+    fitContent: false,
     side: 'right',
   }
 )

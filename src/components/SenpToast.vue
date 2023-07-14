@@ -21,8 +21,8 @@ import { XClass } from '../plugins/xClass'
 
 const props = withDefaults(
   defineProps<{
-    type: 'info' | 'success' | 'warning' | 'error'
-    placement: 'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-left' | 'bottom-right'
+    type?: 'info' | 'success' | 'warning' | 'error'
+    placement?: 'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-left' | 'bottom-right'
     title?: string | undefined | null
     content?: string | undefined | null
     durationMs?: number | undefined | null
@@ -66,7 +66,7 @@ const close = () => {
 }
 
 onMounted(() => {
-  if ((props.durationMs ?? 0) > 0) {
+  if (Number(props.durationMs ?? 0) > 0) {
     setTimeout(() => {
       close()
     }, props.durationMs!)

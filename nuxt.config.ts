@@ -2,10 +2,13 @@ import { resolve } from 'path'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   extends: ['@nuxt-fable/layer'],
-  ssr: false,
+  // ssr: false,
   nuxtStories: {
     title: 'Example Stories',
     autoStoriesGlob: ['./src/components/**/*.vue'],
+    ignored: {
+      autoStoriesGlob: ['./src/components/AutoStoryPreview.vue', './src/components/content/AutoStoryPreview.vue'],
+    },
   },
   modules: ['@nuxtjs/tailwindcss', 'nuxt-headlessui', '@nuxt/content', 'nuxt-icon'],
   content: {
@@ -25,11 +28,11 @@ export default defineNuxtConfig({
   },
   srcDir: './src/',
   alias: {
-    jsurl: 'jsurl/lib/jsurl.js',
+    // jsurl: 'jsurl/lib/jsurl.js',
     vuedraggable: 'vuedraggable/dist/vuedraggable.common.js',
   },
   build: {
-    // transpile: ['jsurl'],
+    transpile: ['jsurl'],
     // transpile: ['highlight.js'],
   },
   hooks: {
@@ -45,6 +48,6 @@ export default defineNuxtConfig({
   },
   components: {
     global: true,
-    dirs: ['~/components'],
+    dirs: ['~/components', '~/components/content'],
   },
 })

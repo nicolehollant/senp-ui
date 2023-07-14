@@ -42,7 +42,7 @@ import { ClassValue } from 'class-variance-authority/dist/types'
 
 const styles = {
   wrapper: cva('relative inline-flex items-center justify-center'),
-  avatar: cva('bg-neutral-100 dark:bg-neutral-800 object-cover', {
+  avatar: cva('bg-gray-100 dark:bg-gray-800 object-cover', {
     variants: {
       size: {
         '3xs': 'h-4 w-4 text-xs',
@@ -58,7 +58,7 @@ const styles = {
       rounded: { full: 'rounded-full', sm: 'rounded-sm', md: 'rounded-md', lg: 'rounded-lg', none: 'rounded-none' },
     },
   }),
-  chip: cva('absolute block rounded-full ring-1 ring-white dark:ring-neutral-900', {
+  chip: cva('absolute block rounded-full ring-1 ring-white dark:ring-gray-900', {
     variants: {
       position: {
         'top-right': 'top-0 right-0',
@@ -107,11 +107,29 @@ const styles = {
 
 const props = withDefaults(
   defineProps<{
+    /**
+     * provide a seed for a procedurally generated avatar, you may pass a user ID or something unique
+     */
     seed?: string
+    /**
+     * provide an image uri to render
+     */
     src?: string
+    /**
+     * alt text for the avatar, used as a fallback if there is no src or seed
+     */
     alt?: string
+    /**
+     * border radius of avatar
+     */
     rounded?: 'sm' | 'md' | 'lg' | 'full' | 'none' | null | undefined
+    /**
+     * size of avatar
+     */
     size?: '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | null | undefined
+    /**
+     * color of the chip indicator
+     */
     chipColor?:
       | 'slate'
       | 'gray'
@@ -137,7 +155,16 @@ const props = withDefaults(
       | 'rose'
       | null
       | undefined
+    /**
+     * position of the chip indicator
+     */
     chipPosition?: 'top-right' | 'bottom-right' | 'top-left' | 'bottom-left' | null | undefined
+    /**
+     * style overrides for the avatar
+     * - avatar: applies to image
+     * - wrapper: applies to wrapper component
+     * - chip: applies to chip indicator
+     */
     classes?: {
       avatar?: ClassValue
       wrapper?: ClassValue
@@ -173,6 +200,6 @@ const avatarSrc = computed(() => {
   if (!props.seed) {
     return null
   }
-  return svgToMiniDataURI(generateFromString(props.seed))
+  return svgToMiniDataURI(generateFromString(String(props.seed)))
 })
 </script>

@@ -25,7 +25,7 @@
             leave-to="opacity-0 scale-95"
           >
             <HeadlessDialogPanel
-              class="flex w-full overflow-auto max-h-full max-w-6xl transform flex-col gap-6 rounded-2xl border-2 border-gray-700 bg-gray-800 text-left align-middle shadow-xl transition-all"
+              class="flex w-full overflow-auto max-h-full max-w-6xl transform flex-col rounded-2xl border-2 border-gray-700 bg-gray-800 text-left align-middle shadow-xl transition-all"
             >
               <slot name="title">
                 <HeadlessDialogTitle
@@ -36,7 +36,7 @@
                   {{ title }}
                 </HeadlessDialogTitle>
               </slot>
-              <div class="px-6 pb-6">
+              <div :class="$xClass('p-6', classes?.panelWrapper)">
                 <slot></slot>
               </div>
             </HeadlessDialogPanel>
@@ -48,9 +48,14 @@
 </template>
 
 <script setup lang="ts">
+import { XClass } from '../plugins/xClass'
+
 defineProps<{
   open: boolean
   title?: string
+  classes?: {
+    panelWrapper?: XClass
+  }
 }>()
 defineEmits<{
   (event: 'update:open', newValue: boolean): void

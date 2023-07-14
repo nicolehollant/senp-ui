@@ -1,15 +1,32 @@
 <template>
   <p v-if="Comp == null">Component not found 😕</p>
-  <ComponentExamplePreview v-else :docgenInfo="story?.component?.__docgenInfo" :story="story"></ComponentExamplePreview>
+  <ComponentExamplePreview
+    v-else
+    :docgenInfo="story?.component?.__docgenInfo"
+    :story="story"
+    :initialSlots="initialSlots"
+    :initialControls="initialControls"
+    :handleModels="handleModels"
+  ></ComponentExamplePreview>
 </template>
 
 <script setup lang="tsx">
 import { getStories } from '#stories'
 
-const props = defineProps<{
-  storyName: string
-  storyGroup: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    storyName: string
+    storyGroup: string
+    initialSlots?: any
+    initialControls?: any
+    handleModels?: any
+  }>(),
+  {
+    initialSlots: {},
+    initialControls: {},
+    handleModels: {},
+  }
+)
 
 const tryParseOrEmptyObject = (val: string) => {
   try {

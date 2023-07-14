@@ -66,6 +66,8 @@
 <script setup lang="ts">
 import { useLocalStorage } from '@vueuse/core'
 
+type ColumnSpan = 'all' | '1' | '2' | '3' | '4' | '5' | '6' | '8' | '12' | number
+
 type FormInput =
   | {
       type: 'textinput'
@@ -76,7 +78,7 @@ type FormInput =
       label?: string
       hint?: string
       error?: string
-      columnSpan?: number | 'all'
+      columnSpan?: ColumnSpan
     }
   | {
       type: 'select'
@@ -87,7 +89,7 @@ type FormInput =
       label?: string
       hint?: string
       error?: string
-      columnSpan?: number | 'all'
+      columnSpan?: ColumnSpan
     }
   | {
       type: 'checkbox'
@@ -98,18 +100,27 @@ type FormInput =
       labelSide?: 'top' | 'left' | 'right'
       hint?: string
       error?: string
-      columnSpan?: number | 'all'
+      columnSpan?: ColumnSpan
     }
 const props = withDefaults(
   defineProps<{
+    /**
+     * number of columns in UI
+     */
     columns?: '1' | '2' | '3' | '4' | '5' | '6' | '8' | '12'
-    defaultColumnSpan?: 'all' | number
+    /**
+     * default column span
+     */
+    defaultColumnSpan?: ColumnSpan
+    /**
+     * local storage key to save progress under
+     */
     localStorageKey?: string
     modelValue: (
       | {
           type: 'description'
           text: string
-          columnSpan?: number | 'all'
+          columnSpan?: ColumnSpan
         }
       | {
           type: 'custom'
@@ -118,7 +129,7 @@ const props = withDefaults(
       | {
           type: 'separator'
           style: 'line' | 'space'
-          columnSpan?: number | 'all'
+          columnSpan?: ColumnSpan
         }
       | {
           type: 'text'
@@ -129,7 +140,7 @@ const props = withDefaults(
           label?: string
           hint?: string
           error?: string
-          columnSpan?: number | 'all'
+          columnSpan?: ColumnSpan
         }
       | {
           type: 'select'
@@ -140,7 +151,7 @@ const props = withDefaults(
           label?: string
           hint?: string
           error?: string
-          columnSpan?: number | 'all'
+          columnSpan?: ColumnSpan
         }
       | {
           type: 'checkbox'
@@ -151,7 +162,7 @@ const props = withDefaults(
           labelSide?: 'top' | 'left' | 'right'
           hint?: string
           error?: string
-          columnSpan?: number | 'all'
+          columnSpan?: ColumnSpan
         }
     )[]
   }>(),
@@ -174,7 +185,7 @@ onMounted(() => {
   }
 })
 
-const columnSpan = (input: { columnSpan?: number | 'all' }, defaultSpan: number | 'all' = props.defaultColumnSpan) => {
+const columnSpan = (input: { columnSpan?: ColumnSpan }, defaultSpan: ColumnSpan = props.defaultColumnSpan) => {
   return {
     gridColumn:
       (input.columnSpan ?? defaultSpan) === 'all' ? '1 / -1' : `span ${input.columnSpan} / span ${input.columnSpan}`,

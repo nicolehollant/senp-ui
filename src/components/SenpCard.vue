@@ -32,9 +32,25 @@
 import { XClass } from '../plugins/xClass'
 withDefaults(
   defineProps<{
+    /**
+     * component to render the card as
+     */
     as?: string
+    /**
+     * type of card
+     * - header: renders title
+     * - basic: renders default slot
+     * - media-top: adds a media slot
+     */
     type?: 'basic' | 'header' | 'media-top'
+    /**
+     * title for card with type=header
+     */
     title?: string
+    /**
+     * style overrides for card
+     * - wrapper: outtermost container
+     */
     classes?: {
       wrapper?: XClass
     }

@@ -24,8 +24,18 @@
 import { XClass } from '../plugins/xClass'
 withDefaults(
   defineProps<{
+    /**
+     * component to render the tag as
+     */
     as?: string
+    /**
+     * theme of the tag
+     */
     theme?: 'primary' | 'success' | 'neutral' | 'error'
+    /**
+     * style overrides for the tag
+     * - tag: outtermost element
+     */
     classes?: {
       tag?: XClass
     }

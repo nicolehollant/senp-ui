@@ -19,8 +19,19 @@
           v-else-if="prop.type === 'string' && prop.options?.length"
           v-model="componentProps[prop.key]"
           :options="prop.options"
-          :classes="{ input: { extend: 'min-w-[5rem]' } }"
+          :classes="{ input: { extend: 'min-w-[6rem] !w-[calc(100%+1.5rem)]' } }"
           :name="`prop-${prop?.label ?? props.key}`"
+        />
+        <SenpTextInput
+          v-else-if="prop.type === 'object'"
+          :model-value="
+            typeof componentProps[prop.key] === 'string'
+              ? componentProps[prop.key]
+              : JSON.stringify(componentProps[prop.key])
+          "
+          :name="`prop-${prop?.label ?? props.key}`"
+          autocomplete="off"
+          @update:model-value="(val) => (componentProps[prop.key] = tryParseOrDefault(val, val))"
         />
         <SenpTextInput
           v-else
@@ -33,9 +44,17 @@
       </div>
     </div>
     <div :class="$cx(styles.canvas({ background: canvasBg, prose: !notProse }))">
-      <component :is="is" v-model="vModel" v-bind="fullProps">
+      <component v-if="ignoreModel" :is="is" v-bind="fullProps">
         <ContentSlot v-if="$slots.default" :use="$slots.default" unwrap="p" />
-        <template v-for="slot in Object.keys(slots || {})" :key="slot" #[slot]>
+        <template v-for="slot in Array.isArray(slots) ? slots : Object.keys(slots || {})" :key="slot" #[slot]>
+          <ClientOnly>
+            <ContentSlot v-if="$slots[slot]" :use="$slots[slot]" />
+          </ClientOnly>
+        </template>
+      </component>
+      <component v-else :is="is" v-model="vModel" v-bind="fullProps">
+        <ContentSlot v-if="$slots.default" :use="$slots.default" unwrap="p" />
+        <template v-for="slot in Array.isArray(slots) ? slots : Object.keys(slots || {})" :key="slot" #[slot]>
           <ClientOnly>
             <ContentSlot v-if="$slots[slot]" :use="$slots[slot]" />
           </ClientOnly>
@@ -54,6 +73,7 @@
 import { transformContent } from '@nuxt/content/transformers'
 import { cva } from 'class-variance-authority'
 import dedent from 'dedent'
+import { tryParseOrDefault } from '../../utils/tryParse'
 
 const props = withDefaults(
   defineProps<{
@@ -66,6 +86,7 @@ const props = withDefaults(
     baseProps?: Record<string, any>
     props?: Record<string, any>
     ignoreProps?: string[]
+    ignoreModel?: boolean
     controls?: Record<
       string,
       {
@@ -93,6 +114,7 @@ const props = withDefaults(
     propCode: () => '',
     previewOnly: false,
     componentClass: '',
+    ignoreModel: false,
   }
 )
 
@@ -115,7 +137,10 @@ const codePreview = computed(() => {
       if (typeof value === 'string') {
         return `${key}="${value}"`
       }
-      return `:${key}="${value}"`
+      if (key.startsWith('v-')) {
+        return `${key}="${JSON.stringify(value).replaceAll('"', "'")}"`
+      }
+      return `:${key}="${JSON.stringify(value).replaceAll('"', "'")}"`
     })
     .filter(Boolean)
     .join(' ')
@@ -163,6 +188,10 @@ const propControls = computed(
             ? 'number'
             : typeof componentProps[key] === 'boolean'
             ? 'boolean'
+            : typeof componentProps[key] === 'string'
+            ? 'string'
+            : typeof componentProps[key] === 'object' && componentProps[key] != null
+            ? 'object'
             : 'string'
         return {
           type,
@@ -175,7 +204,7 @@ const propControls = computed(
       | {
           label: string
           key: string
-          type: 'string' | 'boolean' | 'menu' | 'number'
+          type: 'string' | 'boolean' | 'menu' | 'number' | 'object'
           options?: any[] | undefined
         }
       | {
@@ -189,7 +218,7 @@ const propControls = computed(
 
 const styles = {
   container: cva(
-    'border border-gray-300 dark:border-gray-700 rounded-lg divide-y divide-gray-300 dark:divide-gray-700 overflow-auto',
+    'border border-gray-300 dark:border-gray-700 rounded-lg divide-y divide-gray-300 dark:divide-gray-700',
     {
       variants: {
         prose: { false: 'not-prose', true: 'prose' },
@@ -203,13 +232,13 @@ const styles = {
       background: { transparent: 'bg-transparent', dark: 'bg-gray-900', light: 'bg-gray-100', medium: 'bg-gray-500' },
     },
   }),
-  code: cva('p-4 overflow-auto', {
+  code: cva('p-4 overflow-auto rounded-b-lg text-xs', {
     variants: {
       prose: { false: 'not-prose', true: 'prose' },
       background: { transparent: 'bg-transparent', dark: 'bg-gray-900', light: 'bg-gray-100', medium: 'bg-gray-500' },
     },
   }),
-  controls: cva('flex divide-x divide-gray-300 dark:divide-gray-700 max-w-full overflow-auto', {
+  controls: cva('flex divide-x divide-gray-300 dark:divide-gray-700 max-w-full overflow-auto rounded-t-lg', {
     variants: {
       prose: { false: 'not-prose', true: 'prose' },
       background: { transparent: 'bg-transparent', dark: 'bg-gray-900', light: 'bg-gray-100', medium: 'bg-gray-500' },

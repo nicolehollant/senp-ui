@@ -1,207 +1,226 @@
 <template>
-  <ClientOnly>
-    <slot name="settingsTrigger">
-      <div class="fixed z-50 bottom-0 right-0 m-4 sm:m-8">
-        <button
-          class="w-12 sm:w-16 h-12 sm:h-16 flex items-center justify-center rounded-full bg-blue-600 hover:animate-wiggle animation-repeat-infinite"
-          @click="state.settingsOpen = true"
+  <div class="relative">
+    <ClientOnly>
+      <div :class="{ 'max-h-screen overflow-auto': settingsStrategy === 'absolute', ...$xClass('', classes?.wrapper) }">
+        <DynamicScroller
+          :items="filteredData"
+          :min-item-size="40"
+          :pageMode="settingsStrategy === 'fixed'"
+          :key-field="keyField"
         >
-          <Icon class="text-2xl sm:text-3xl" name="mdi:cog"></Icon>
-        </button>
-      </div>
-    </slot>
-    <DynamicScroller :items="filteredData" :min-item-size="40" pageMode :key-field="keyField">
-      <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem :item="item" :active="active" :data-index="index">
-          <section class="grid gap-2 py-6 px-4 border-b border-gray-800">
-            <div
-              v-if="headers.filter((a) => a.visible && a.as === 'list').length"
-              class="grid pb-3"
-              :style="`gap: ${state.cellGap === 'sm' ? '0.5rem' : state.cellGap === 'md' ? '1rem' : '2rem'}`"
-            >
-              <template v-for="k in [...headers].filter((a) => a.visible && a.as === 'list')">
+          <template v-slot="{ item, index, active }">
+            <DynamicScrollerItem :item="item" :active="active" :data-index="index">
+              <section class="grid gap-2 py-6 px-4 border-b border-gray-800">
                 <div
-                  class="flex w-max"
-                  :class="{
-                    'text-lg': k.size === 'md',
-                    'text-2xl font-medium': k.size === 'lg',
-                    'pb-3': k.size === 'lg' && k.span === 'full',
-                    'gap-2 items-baseline flex-row': k.labelSide === 'left',
-                    'gap-2 items-baseline flex-row-reverse': k.labelSide === 'right',
-                    'flex-col': k.labelSide === 'top',
-                    'flex-col flex-col-reverse': k.labelSide === 'bottom',
-                  }"
+                  v-if="headers.filter((a) => a.visible && a.as === 'list').length"
+                  class="grid pb-3"
+                  :style="`gap: ${state.cellGap === 'sm' ? '0.5rem' : state.cellGap === 'md' ? '1rem' : '2rem'}`"
                 >
-                  <p
-                    v-if="k.label"
-                    class="text-xs"
-                    :class="{ 'text-gray-400': k.style === 'standard', 'text-gray-600': k.style === 'muted' }"
-                  >
-                    {{ k.label }}
-                  </p>
-                  <p :class="{ 'text-white': k.style === 'standard', 'text-gray-400': k.style === 'muted' }">
-                    {{ item[k.key] }}
-                  </p>
-                </div>
-              </template>
-            </div>
-            <section
-              class="flex flex-wrap gap-2 pb-3"
-              v-if="state.tagPosition === 'top' && headers.filter((a) => a.visible && a.as === 'tag').length"
-            >
-              <div
-                v-for="k in headers.filter((a) => a.visible && a.as === 'tag')"
-                class="rounded bg-gray-900 flex leading-none"
-                :class="{
-                  'items-center flex-row': k.labelSide === 'left',
-                  'items-center flex-row-reverse': k.labelSide === 'right',
-                  'justify-center flex-col': k.labelSide === 'top',
-                  'justify-center flex-col flex-col-reverse': k.labelSide === 'bottom',
-                }"
-              >
-                <div
-                  class="text-xs"
-                  :class="{
-                    'text-gray-400': k.style === 'standard',
-                    'text-gray-600': k.style === 'muted',
-                    'py-1 pl-2 pr-1': k.labelSide === 'left',
-                    'py-1 pr-2 pl-1': k.labelSide === 'right',
-                  }"
-                >
-                  {{ k.label }}
-                </div>
-                <div
-                  :class="{
-                    'text-white': k.style === 'standard',
-                    'text-gray-400': k.style === 'muted',
-                    'py-1 pr-2 pl-1': k.labelSide === 'left',
-                    'py-1 pl-2 pr-1': k.labelSide === 'right',
-                  }"
-                >
-                  {{ item[k.key] }}
-                </div>
-              </div>
-            </section>
-            <div
-              v-if="headers.filter((a) => a.visible && a.as === 'cell').length"
-              class="flex space-evenly flex-wrap md:grid"
-              :class="{
-                'bg-gray-900 p-4 rounded-xl': headers.filter((a) => a.visible && a.as !== 'cell').length,
-                'gap-4 md:gap-2': state.cellGap === 'sm',
-                'gap-4': state.cellGap === 'md',
-                'gap-8': state.cellGap === 'md',
-              }"
-              :style="`grid-template-columns: repeat(${headers
-                .filter((a) => a.visible && a.as === 'cell')
-                .reduce((prev, curr) => (prev += curr.span === 'full' ? 0 : Number(curr.span)), 0)}, ${
-                state.cellSpacing === 'even' ? 'minmax(0, 1fr)' : state.cellSpacing === 'auto' ? 'auto' : 'max-content'
-              });`"
-            >
-              <template v-for="k in headers.filter((a) => a.visible && a.as === 'cell')">
-                <div
-                  :style="`grid-column: ${k.span === 'full' ? '1' : 'span ' + k.span} / ${
-                    k.span === 'full' ? '-1' : 'span ' + k.span
-                  }`"
-                  class="flex"
-                  :class="{
-                    'text-lg': k.size === 'md',
-                    'text-2xl font-medium': k.size === 'lg',
-                    'py-3': k.span === 'full',
-                    'gap-2 items-baseline flex-row': k.labelSide === 'left',
-                    'gap-2 items-baseline flex-row-reverse': k.labelSide === 'right',
-                    'flex-col': k.labelSide === 'top',
-                    'flex-col flex-col-reverse': k.labelSide === 'bottom',
-                  }"
-                >
-                  <p
-                    v-if="k.label"
-                    class="text-xs shrink-0 break-all"
-                    :class="{ 'text-gray-400': k.style === 'standard', 'text-gray-600': k.style === 'muted' }"
-                  >
-                    {{ k.label }}
-                  </p>
-                  <p
-                    class="break-words"
-                    :class="{ 'text-white': k.style === 'standard', 'text-gray-400': k.style === 'muted' }"
-                  >
-                    {{ item[k.key] }}
-                  </p>
-                </div>
-              </template>
-            </div>
-            <section
-              class="flex flex-wrap gap-2"
-              v-if="state.tagPosition === 'bottom' && headers.filter((a) => a.visible && a.as === 'tag').length"
-            >
-              <div
-                v-for="k in headers.filter((a) => a.visible && a.as === 'tag')"
-                class="rounded bg-gray-900 flex leading-none"
-                :class="{
-                  'items-center flex-row': k.labelSide === 'left',
-                  'items-center flex-row-reverse': k.labelSide === 'right',
-                  'justify-center flex-col': k.labelSide === 'top',
-                  'justify-center flex-col flex-col-reverse': k.labelSide === 'bottom',
-                }"
-              >
-                <div
-                  class="text-xs"
-                  :class="{
-                    'text-gray-400': k.style === 'standard',
-                    'text-gray-600': k.style === 'muted',
-                    'py-1 pl-2 pr-1': k.labelSide === 'left',
-                    'py-1 pr-2 pl-1': k.labelSide === 'right',
-                  }"
-                >
-                  {{ k.label }}
-                </div>
-                <div
-                  :class="{
-                    'text-white': k.style === 'standard',
-                    'text-gray-400': k.style === 'muted',
-                    'py-1 pr-2 pl-1': k.labelSide === 'left',
-                    'py-1 pl-2 pr-1': k.labelSide === 'right',
-                  }"
-                >
-                  {{ item[k.key] }}
-                </div>
-              </div>
-            </section>
-            <details
-              :class="{
-                'bg-gray-900/20 border-l-2 border-gray-900 !px-4': !headers.filter((a) => a.visible && a.as !== 'cell')
-                  .length,
-              }"
-              class="rounded-sm py-2 px-2 leading-none w-full"
-              v-if="headers.filter((a) => a.visible && a.as === 'details').length"
-            >
-              <summary class="w-full cursor-pointer">
-                <div class="inline ml-2 text-sm w-full">Details</div>
-              </summary>
-              <div
-                class="grid gap-2 py-2"
-                :class="{
-                  '!px-6': !headers.filter((a) => a.visible && a.as !== 'cell').length,
-                }"
-              >
-                <div
-                  v-for="k in headers.filter((a) => a.visible && a.as === 'details')"
-                  class="rounded bg-gray-900 px-4 py-1 flex items-center leading-none w-full"
-                >
-                  <details class="w-full">
-                    <summary class="w-full cursor-pointer">
-                      <div class="inline ml-2 text-sm w-full">
+                  <template v-for="k in [...headers].filter((a) => a.visible && a.as === 'list')">
+                    <div
+                      class="flex w-max"
+                      :class="{
+                        'text-lg': k.size === 'md',
+                        'text-2xl font-medium': k.size === 'lg',
+                        'pb-3': k.size === 'lg' && k.span === 'full',
+                        'gap-2 items-baseline flex-row': k.labelSide === 'left',
+                        'gap-2 items-baseline flex-row-reverse': k.labelSide === 'right',
+                        'flex-col': k.labelSide === 'top',
+                        'flex-col-reverse': k.labelSide === 'bottom',
+                      }"
+                    >
+                      <p
+                        v-if="k.label"
+                        class="text-xs"
+                        :class="{ 'text-gray-400': k.style === 'standard', 'text-gray-600': k.style === 'muted' }"
+                      >
                         {{ k.label }}
-                      </div>
-                    </summary>
-                    <p class="py-6 ml-6">{{ item[k.key] }}</p>
-                  </details>
+                      </p>
+                      <p :class="{ 'text-white': k.style === 'standard', 'text-gray-400': k.style === 'muted' }">
+                        {{ item[k.key] }}
+                      </p>
+                    </div>
+                  </template>
                 </div>
-              </div>
-            </details>
-          </section>
-        </DynamicScrollerItem>
-      </template>
-    </DynamicScroller>
+                <section
+                  class="flex flex-wrap gap-2 pb-3"
+                  v-if="state.tagPosition === 'top' && headers.filter((a) => a.visible && a.as === 'tag').length"
+                >
+                  <div
+                    v-for="k in headers.filter((a) => a.visible && a.as === 'tag')"
+                    class="rounded bg-gray-900 flex leading-none"
+                    :class="{
+                      'items-center flex-row': k.labelSide === 'left',
+                      'items-center flex-row-reverse': k.labelSide === 'right',
+                      'justify-center flex-col': k.labelSide === 'top',
+                      'justify-center flex-col-reverse': k.labelSide === 'bottom',
+                    }"
+                  >
+                    <div
+                      class="text-xs"
+                      :class="{
+                        'text-gray-400': k.style === 'standard',
+                        'text-gray-600': k.style === 'muted',
+                        'py-1 pl-2 pr-1': k.labelSide === 'left',
+                        'py-1 pr-2 pl-1': k.labelSide === 'right',
+                      }"
+                    >
+                      {{ k.label }}
+                    </div>
+                    <div
+                      :class="{
+                        'text-white': k.style === 'standard',
+                        'text-gray-400': k.style === 'muted',
+                        'py-1 pr-2 pl-1': k.labelSide === 'left',
+                        'py-1 pl-2 pr-1': k.labelSide === 'right',
+                      }"
+                    >
+                      {{ item[k.key] }}
+                    </div>
+                  </div>
+                </section>
+                <div
+                  v-if="headers.filter((a) => a.visible && a.as === 'cell').length"
+                  class="flex space-evenly flex-wrap md:grid"
+                  :class="{
+                    'bg-gray-900 p-4 rounded-xl': headers.filter((a) => a.visible && a.as !== 'cell').length,
+                    'gap-4 md:gap-2': state.cellGap === 'sm',
+                    'gap-4': state.cellGap === 'md',
+                    'gap-8': state.cellGap === 'md',
+                  }"
+                  :style="`grid-template-columns: repeat(${headers
+                    .filter((a) => a.visible && a.as === 'cell')
+                    .reduce((prev, curr) => (prev += curr.span === 'full' ? 0 : Number(curr.span)), 0)}, ${
+                    state.cellSpacing === 'even'
+                      ? 'minmax(0, 1fr)'
+                      : state.cellSpacing === 'auto'
+                      ? 'auto'
+                      : 'max-content'
+                  });`"
+                >
+                  <template v-for="k in headers.filter((a) => a.visible && a.as === 'cell')">
+                    <div
+                      :style="`grid-column: ${k.span === 'full' ? '1' : 'span ' + k.span} / ${
+                        k.span === 'full' ? '-1' : 'span ' + k.span
+                      }`"
+                      class="flex"
+                      :class="{
+                        'text-lg': k.size === 'md',
+                        'text-2xl font-medium': k.size === 'lg',
+                        'py-3': k.span === 'full',
+                        'gap-2 items-baseline flex-row': k.labelSide === 'left',
+                        'gap-2 items-baseline flex-row-reverse': k.labelSide === 'right',
+                        'flex-col': k.labelSide === 'top',
+                        'flex-col-reverse': k.labelSide === 'bottom',
+                      }"
+                    >
+                      <p
+                        v-if="k.label"
+                        class="text-xs shrink-0 break-all"
+                        :class="{ 'text-gray-400': k.style === 'standard', 'text-gray-600': k.style === 'muted' }"
+                      >
+                        {{ k.label }}
+                      </p>
+                      <p
+                        class="break-words"
+                        :class="{ 'text-white': k.style === 'standard', 'text-gray-400': k.style === 'muted' }"
+                      >
+                        {{ item[k.key] }}
+                      </p>
+                    </div>
+                  </template>
+                </div>
+                <section
+                  class="flex flex-wrap gap-2"
+                  v-if="state.tagPosition === 'bottom' && headers.filter((a) => a.visible && a.as === 'tag').length"
+                >
+                  <div
+                    v-for="k in headers.filter((a) => a.visible && a.as === 'tag')"
+                    class="rounded bg-gray-900 flex leading-none"
+                    :class="{
+                      'items-center flex-row': k.labelSide === 'left',
+                      'items-center flex-row-reverse': k.labelSide === 'right',
+                      'justify-center flex-col': k.labelSide === 'top',
+                      'justify-center flex-col-reverse': k.labelSide === 'bottom',
+                    }"
+                  >
+                    <div
+                      class="text-xs"
+                      :class="{
+                        'text-gray-400': k.style === 'standard',
+                        'text-gray-600': k.style === 'muted',
+                        'py-1 pl-2 pr-1': k.labelSide === 'left',
+                        'py-1 pr-2 pl-1': k.labelSide === 'right',
+                      }"
+                    >
+                      {{ k.label }}
+                    </div>
+                    <div
+                      :class="{
+                        'text-white': k.style === 'standard',
+                        'text-gray-400': k.style === 'muted',
+                        'py-1 pr-2 pl-1': k.labelSide === 'left',
+                        'py-1 pl-2 pr-1': k.labelSide === 'right',
+                      }"
+                    >
+                      {{ item[k.key] }}
+                    </div>
+                  </div>
+                </section>
+                <details
+                  :class="{
+                    'bg-gray-900/20 border-l-2 border-gray-900 !px-4': !headers.filter(
+                      (a) => a.visible && a.as !== 'cell'
+                    ).length,
+                  }"
+                  class="rounded-sm py-2 px-2 leading-none w-full"
+                  v-if="headers.filter((a) => a.visible && a.as === 'details').length"
+                >
+                  <summary class="w-full cursor-pointer">
+                    <div class="inline ml-2 text-sm w-full">Details</div>
+                  </summary>
+                  <div
+                    class="grid gap-2 py-2"
+                    :class="{
+                      '!px-6': !headers.filter((a) => a.visible && a.as !== 'cell').length,
+                    }"
+                  >
+                    <div
+                      v-for="k in headers.filter((a) => a.visible && a.as === 'details')"
+                      class="rounded bg-gray-900 px-4 py-1 flex items-center leading-none w-full"
+                    >
+                      <details class="w-full">
+                        <summary class="w-full cursor-pointer">
+                          <div class="inline ml-2 text-sm w-full">
+                            {{ k.label }}
+                          </div>
+                        </summary>
+                        <p class="py-6 ml-6">{{ item[k.key] }}</p>
+                      </details>
+                    </div>
+                  </div>
+                </details>
+              </section>
+            </DynamicScrollerItem>
+          </template>
+        </DynamicScroller>
+      </div>
+      <slot name="settingsTrigger">
+        <div
+          class="z-50 bottom-0 right-0 m-4 sm:m-8"
+          :class="{ fixed: settingsStrategy === 'fixed', absolute: settingsStrategy === 'absolute' }"
+        >
+          <button
+            class="w-12 sm:w-16 h-12 sm:h-16 flex items-center justify-center rounded-full bg-blue-600 hover:animate-wiggle animation-repeat-infinite"
+            @click="state.settingsOpen = true"
+          >
+            <Icon class="text-2xl sm:text-3xl" name="mdi:cog"></Icon>
+          </button>
+        </div>
+      </slot>
+    </ClientOnly>
+  </div>
+  <ClientOnly>
     <SenpDrawer
       side="bottom"
       :classes="{ maxSize: { base: 'w-full max-h-[75vh]' } }"
@@ -402,6 +421,7 @@
 </template>
 
 <script setup lang="ts">
+import { XClass } from '../plugins/xClass'
 import type { CsvFilter, CsvSorter, CsvSettings, CsvState } from '../composables/useCsvFiltering'
 
 const props = withDefaults(
@@ -413,9 +433,16 @@ const props = withDefaults(
     initialSorters?: CsvSorter[] | string
     initialSettings?: CsvSettings[] | string
     initialState?: CsvState | string
+    settingsStrategy?: 'fixed' | 'absolute'
+    queryKeyPrefix?: string
+    classes?: {
+      wrapper?: XClass
+    }
   }>(),
   {
+    queryKeyPrefix: '',
     keyField: 'id',
+    settingsStrategy: 'fixed',
   }
 )
 
@@ -430,10 +457,10 @@ const { filters, sorters, filteredData, filterOperations, sorterOperations, head
   }
 )
 
-useQueryParamSync(headers, 'dv', { watchDeep: true, runOnMounted: true })
-useQueryParamSync(filters, 'f', { watchDeep: true, runOnMounted: true })
-useQueryParamSync(sorters, 's', { watchDeep: true, runOnMounted: true })
-useQueryParamSync(state, 'st', { watchDeep: true, runOnMounted: true })
+useQueryParamSync(headers, [props.queryKeyPrefix, 'dv'].join(''), { watchDeep: true, runOnMounted: true })
+useQueryParamSync(filters, [props.queryKeyPrefix, 'f'].join(''), { watchDeep: true, runOnMounted: true })
+useQueryParamSync(sorters, [props.queryKeyPrefix, 's'].join(''), { watchDeep: true, runOnMounted: true })
+useQueryParamSync(state, [props.queryKeyPrefix, 'st'].join(''), { watchDeep: true, runOnMounted: true })
 </script>
 
 <style scoped>

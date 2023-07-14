@@ -45,13 +45,35 @@ defineEmits<{
 }>()
 withDefaults(
   defineProps<{
+    /**
+     * size of chackbox
+     * - base: default size
+     * - input: match size of TextInput
+     */
     size?: 'base' | 'input'
+    /**
+     * v-model
+     */
     modelValue: boolean
+    /**
+     * label for checkbox
+     */
     label?: string
+    /**
+     * position of label
+     */
     labelSide?: 'top' | 'left' | 'right'
+    /**
+     * hint for checkbox
+     */
     hint?: string
+    /**
+     * error string for checkbox
+     */
     error?: string
-    type?: string
+    /**
+     * style overrides for checkbox
+     */
     classes?: {
       wrapper?: XClass
       label?: XClass

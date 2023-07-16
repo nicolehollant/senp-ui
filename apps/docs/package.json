@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "name": "senp-ui-docs",
+  "version": "0.1.0",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@types/dedent": "^0.7.0",
+    "nuxt": "^3.6.3",
+    "sass": "^1.62.1"
+  },
+  "dependencies": {
+    "@nuxt-fable/layer": "^0.0.10",
+    "@nuxt/content": "^2.3.0",
+    "senp-ui": "workspace:^0.1.1"
+  }
+}

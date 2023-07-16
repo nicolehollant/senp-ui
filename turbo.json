@@ -1,0 +1,28 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "senp-ui#install": {
+      "outputs": []
+    },
+    "senp-ui#build": {
+      "dependsOn": ["senp-ui#install"],
+      "outputs": ["dist/**"]
+    },
+    "senp-ui-docs#install": {
+      "dependsOn": ["senp-ui#build"]
+    },
+    "senp-ui-docs#build": {
+      "dependsOn": ["senp-ui-docs#install"],
+      "outputs": ["dist/**"]
+    },
+
+    "build": {
+      "dependsOn": ["senp-ui-docs#build"],
+      "outputs": ["dist/**"]
+    },
+
+    "dev": {
+      "cache": false
+    }
+  }
+}

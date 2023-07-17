@@ -6,7 +6,7 @@
       :alt="alt ?? 'Avatar'"
       :class="$cx(styles.avatar({ size, rounded }), classes?.avatar)"
       @error="didError = true"
-    >
+    />
     <span
       v-else-if="initials"
       :class="
@@ -17,7 +17,7 @@
             rounded,
             class: 'flex items-center justify-center',
           }),
-          classes?.avatar
+          classes?.avatar,
         )
       "
     >
@@ -33,21 +33,18 @@
             rounded,
             class: 'flex items-center justify-center',
           }),
-          classes?.avatar
+          classes?.avatar,
         )
       "
     >
-      <Icon
-        name="mdi:account"
-        class="w-full h-full"
-      />
+      <Icon name="mdi:account" class="w-full h-full" />
     </div>
     <span
       v-if="chipColor"
       :class="
         $cx(
           styles.chip({ color: chipColor, position: chipPosition, size }),
-          classes?.chip
+          classes?.chip,
         )
       "
     />
@@ -57,9 +54,8 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { cva } from "class-variance-authority";
-import svgToMiniDataURI from "mini-svg-data-uri";
-import { generateFromString } from "generate-avatar";
-import { SenpCx } from "../plugins/senpCx";
+import { createAvatar } from "@dicebear/core";
+import { thumbs } from "@dicebear/collection";
 import { ClassValue } from "class-variance-authority/dist/types";
 
 const styles = {
@@ -132,7 +128,7 @@ const styles = {
           rose: "bg-rose-500 dark:bg-rose-400",
         },
       },
-    }
+    },
   ),
 };
 
@@ -223,7 +219,7 @@ const props = withDefaults(
     size: "md",
     chipPosition: "top-right",
     rounded: "full",
-  }
+  },
 );
 
 const didError = ref(false);
@@ -248,7 +244,10 @@ const avatarSrc = computed(() => {
   if (!props.seed) {
     return null;
   }
-  return svgToMiniDataURI(generateFromString(String(props.seed)));
+  const avatar = createAvatar(thumbs, {
+    size: 128,
+    seed: props.seed,
+  }).toDataUriSync();
+  return avatar;
 });
 </script>
-../plugins/senpCx

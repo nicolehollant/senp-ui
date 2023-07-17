@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  modules: ["../src/module", "@nuxt-fable/module"],
+  modules: ["../src/module", "@nuxt-fable/module", "@nuxt/content"],
   ssr: false,
   nuxtStories: {
     title: "Example Stories",
@@ -35,8 +35,8 @@ export default defineNuxtConfig({
     global: true,
     dirs: ["~/components", "~/components/content"],
   },
-  // imports: {
-  //   autoImport: true,
-  // },
+  imports: {
+    autoImport: true,
+  },
   // devtools: { enabled: true },
 });

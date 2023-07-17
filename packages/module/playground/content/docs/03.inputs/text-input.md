@@ -40,6 +40,18 @@ props:
 ---
 ::
 
+## Multiline
+
+Use the `multiline` prop to render as a textarea.
+
+::ComponentExample
+---
+is: SenpTextInput
+props:
+  multiline: true
+---
+::
+
 <hr class="my-20">
 
 ## Component API

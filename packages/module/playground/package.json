@@ -10,6 +10,7 @@
     "nuxt": "latest"
   },
   "dependencies": {
+    "@nuxt/content": "^2.3.0",
     "@nuxt-fable/layer": "^0.0.10",
     "@nuxt-fable/module": "^0.0.9"
   }

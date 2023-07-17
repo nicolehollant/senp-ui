@@ -50,7 +50,10 @@
           class="px-4 prose prose-invert mx-auto !max-w-full lg:!max-w-4xl [&_.not-prose_pre]:!my-0 [&_.not-prose_pre]:!p-0 prose-code:p-1 prose-code:bg-gray-800 prose-code:rounded-md prose-code:after:content-none prose-code:before:content-none prose-code:border prose-code:border-gray-700"
         >
           <p class="capitalize text-sm font-medium text-blue-400">{{ activeDirectory }}</p>
-          <ContentDoc />
+          <Icon name="svg-spinners:3-dots-bounce" v-if="pending" />
+          <ClientOnly>
+            <ContentDoc />
+          </ClientOnly>
           <hr />
           <div class="not-prose flex items-center gap-4">
             <NuxtLink
@@ -170,7 +173,7 @@ const activeDirectory = computed(() => {
   )?.dir
 })
 
-const { data } = await useAsyncData(`content-${path}`, () => {
+const { data, pending } = await useAsyncData(`content-${path}`, () => {
   return queryContent('/docs')
     .where({ _path: path.endsWith('/') ? path.slice(0, -1) : path })
     .only(['body'])

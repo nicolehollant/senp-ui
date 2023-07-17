@@ -1,21 +1,36 @@
 import { resolve } from 'path'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // extends: ['@nuxt-fable/layer'],
-  // ssr: false,
-  nuxtStories: {
-    title: 'Example Stories',
-    autoStoriesGlob: ['./components/**/*.vue'],
-    storiesGlob: ['./stories/**/*.vue'],
-    ignored: {
-      autoStoriesGlob: ['./components/AutoStoryPreview.vue', './components/content/AutoStoryPreview.vue'],
-    },
+  ssr: false,
+  extends: ['@nuxt-fable/layer'],
+  modules: ['senp-ui', '@nuxt/content'],
+  srcDir: './src/',
+  senpui: {
+    global: true,
+    prefix: '',
   },
-  modules: ['senp-ui', '@nuxt-fable/module'],
   content: {
     highlight: {
       theme: 'github-dark',
     },
+  },
+  nuxtStories: {
+    title: 'Example Stories',
+    autoStoriesGlob: ['./src/components/**/*.vue', './node_modules/senp-ui/**/components/**/*.vue'],
+    storiesGlob: ['./src/stories/**/*.vue'],
+    ignored: {
+      autoStoriesGlob: ['./src/components/AutoStoryPreview.vue', './src/components/content/AutoStoryPreview.vue'],
+    },
+  },
+  hooks: {
+    'vite:extendConfig': (config, { isClient, isServer }) => {
+      if (isClient && config?.resolve?.alias) {
+        ;(config.resolve.alias as any).vue = 'vue/dist/vue.esm-bundler'
+      }
+    },
+  },
+  build: {
+    transpile: ['js-beautify'],
   },
   app: {
     head: {
@@ -27,21 +42,4 @@ export default defineNuxtConfig({
       ],
     },
   },
-  srcDir: './src/',
-  alias: {
-    // jsurl: 'jsurl/lib/jsurl.js',
-    vuedraggable: 'vuedraggable/dist/vuedraggable.common.js',
-  },
-  build: {
-    transpile: ['jsurl'],
-    // transpile: ['highlight.js'],
-  },
-  senpui: {
-    global: true,
-    prefix: '',
-  },
-  // components: {
-  //   global: true,
-  //   dirs: ['~/components', '~/components/content'],
-  // },
 })

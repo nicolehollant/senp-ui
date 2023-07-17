@@ -14,21 +14,19 @@
     }"
   >
     <template #header>
-      <div
-        class="px-4 sm:px-6 lg:px-8 font-medium flex items-center gap-3 max-w-4xl w-full m-auto border-b border-gray-800"
-      >
+      <div class="px-4 font-medium flex items-center gap-3 max-w-4xl w-full m-auto h-16">
         <p class="text-transparent bg-clip-text bg-gradient-to-br from-green-500 to-teal-700 text-4xl">🎨</p>
         <p>SenpUI</p>
       </div>
     </template>
 
     <template #content>
-      <p>
-        Senp-ui is a simple component library for nuxt3 with the intention of being used via
-        <code class="text-blue-300 font-semibold">nuxt extends</code>
-      </p>
+      <p>SenpUI is a beautifully designed component library for Nuxt 3</p>
       <nav>
-        <NuxtLink class="block" to="/docs"><SenpButton>Docs</SenpButton></NuxtLink>
+        <div class="flex items-center gap-2">
+          <NuxtLink class="block" to="/docs"><SenpButton>Docs</SenpButton></NuxtLink>
+          <NuxtLink class="block" to="/playground/edit"><SenpButton>Playground</SenpButton></NuxtLink>
+        </div>
         <h2 class="mt-12 mb-8 text-2xl">Examples</h2>
         <ul class="flex flex-wrap gap-2 items-center">
           <NuxtLink to="/examples/auto-complete"><SenpButton>auto-complete</SenpButton></NuxtLink>

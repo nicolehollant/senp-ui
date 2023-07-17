@@ -12,12 +12,16 @@
   },
   "devDependencies": {
     "@types/dedent": "^0.7.0",
-    "nuxt": "^3.6.3",
-    "sass": "^1.62.1"
+    "nuxt": "^3.6.3"
   },
   "dependencies": {
     "@nuxt-fable/layer": "^0.0.10",
-    "@nuxt/content": "^2.3.0",
-    "senp-ui": "workspace:^0.1.1"
+    "@nuxt/content": "^2.7.0",
+    "@types/node": "^18.16.19",
+    "js-beautify": "^1.14.7",
+    "prettier": "^3.0.0",
+    "sass": "^1.63.6",
+    "senp-ui": "workspace:^0.1.2",
+    "vite": "^4.4.4"
   }
 }

@@ -1,9 +1,43 @@
+import { defineNuxtModule, addPlugin, addPluginTemplate } from '@nuxt/kit'
+
 import { resolve } from 'path'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // ssr: false,
   extends: ['@nuxt-fable/layer'],
-  modules: ['senp-ui', '@nuxt/content'],
+  modules: [
+    'senp-ui',
+    '@nuxt/content',
+    async (inlineOptions, nuxt) => {
+      nuxt.options.runtimeConfig.public.rawContent = {
+        SenpButton: 'asdkfhjasd',
+      }
+    },
+    // defineNuxtModule({
+    //   setup(options, nuxt) {
+    //     // Create resolver to resolve relative paths
+    //     // const { resolve } = createResolver(import.meta.url)
+
+    //     addPlugin(
+    //       addPluginTemplate({
+    //         filename: 'rawContent',
+    //         getContents: () => `
+    //         import { defineNuxtPlugin } from '#imports'
+    //         export default defineNuxtPlugin(() => {
+    //             return {
+    //               provide: {
+    //                 rawContent: {
+    //                   SenpButton: 'asdkfhjasd',
+    //                 },
+    //               },
+    //             }
+    //           })
+    //         `,
+    //       })
+    //     )
+    //   },
+    // }),
+  ],
   srcDir: './src/',
   senpui: {
     global: true,

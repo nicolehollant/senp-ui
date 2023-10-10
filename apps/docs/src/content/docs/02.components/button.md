@@ -181,3 +181,14 @@ initialControls:
   label: Hello World
 ---
 ::
+
+<hr class="my-20">
+
+## Component Copy
+
+::RawComponent
+---
+senpUiModuleContains: 'SenpButton.vue'
+language: 'vue'
+---
+::

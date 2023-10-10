@@ -79,10 +79,7 @@
       </SenpButton>
     </div>
 
-    <div
-      v-if="state.mode === 'code'"
-      class="not-prose bg-gray-950 rounded-xl"
-    >
+    <div v-if="state.mode === 'code'" class="not-prose bg-gray-950 rounded-xl">
       <SenpHighlight
         :classes="{ pre: { extend: '!overflow-visible' } }"
         language="vue"
@@ -91,27 +88,18 @@
       />
     </div>
 
-    <div
-      v-if="state.mode === 'props' && filteredProps"
-      class="not-prose"
-    >
+    <div v-if="state.mode === 'props' && filteredProps" class="not-prose">
       <DataTable
         class="max-h-[36rem] [&_thead]:ring-1 [&_thead]:ring-gray-700 [&_table]:max-h-[36rem] [&_table]:overflow-auto [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-40"
         :rows="filteredProps"
         :columns="['Name', 'Description', 'Controls']"
       >
-        <tr
-          v-for="(row, i) in filteredProps"
-          :key="'row-' + i"
-        >
+        <tr v-for="(row, i) in filteredProps" :key="'row-' + i">
           <td>
             <div>
               {{ row.name }}
             </div>
-            <div
-              v-if="row.required"
-              style="font-size: 0.75em; color: #fbbf24"
-            >
+            <div v-if="row.required" style="font-size: 0.75em; color: #fbbf24">
               required*
             </div>
           </td>
@@ -120,9 +108,7 @@
               class="max-w-xs text-xs"
               style="display: flex; flex-direction: column; gap: 0.75rem"
             >
-              <pre
-                class="whitespace-pre-wrap !leading-snug"
-              ><code
+              <pre class="whitespace-pre-wrap !leading-snug"><code
 v-if="row.type"
                      style="color: #93c5fd;"
 >{{
@@ -132,17 +118,13 @@ v-if="row.type"
                            .join(' | ')
                          : row.type.type
                      }}</code></pre>
-              <div
-                v-if="row.description"
-                style="white-space: pre-wrap"
-              >
+              <div v-if="row.description" style="white-space: pre-wrap">
                 {{ row.description }}
               </div>
-              <p
-                v-if="row.defaultValue"
-                class="m-0"
-              >
-                <code class="text-teal-400">(default: {{ row.defaultValue }})</code>
+              <p v-if="row.defaultValue" class="m-0">
+                <code class="text-teal-400"
+                  >(default: {{ row.defaultValue }})</code
+                >
               </p>
             </div>
           </td>
@@ -167,28 +149,19 @@ v-if="row.type"
       Component has no detected props
     </div>
 
-    <div
-      v-if="state.mode === 'slots' && filteredSlots"
-      class="not-prose"
-    >
+    <div v-if="state.mode === 'slots' && filteredSlots" class="not-prose">
       <DataTable
         class="max-h-[36rem] [&_thead]:ring-1 [&_thead]:ring-gray-700 [&_table]:max-h-[36rem] [&_table]:overflow-auto [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-40"
         :rows="filteredSlots"
         :columns="['Name', 'Description', 'Bindings', 'Controls']"
       >
-        <tr
-          v-for="(row, i) in filteredSlots"
-          :key="'row-' + i"
-        >
+        <tr v-for="(row, i) in filteredSlots" :key="'row-' + i">
           <td>
             {{ row.name }}
           </td>
           <td>
             <div>
-              <div
-                v-if="row.description"
-                style="white-space: pre-wrap"
-              >
+              <div v-if="row.description" style="white-space: pre-wrap">
                 {{ row.description }}
               </div>
               <pre v-if="row.tags"><code>{{ row.tags }}</code></pre>
@@ -299,10 +272,10 @@ const props = withDefaults(
     handleModels: Record<string, string>;
   }>(),
   {
-    initialSlots: {},
-    initialControls: {},
+    initialSlots: () => ({}),
+    initialControls: () => ({}),
     handleModels: () => ({}),
-  }
+  },
 );
 
 const query = reactive({
@@ -362,7 +335,7 @@ const parseElementsArray = (elements: any[]): any[] => {
 };
 
 const _parseComponentDocProps = (
-  type: any
+  type: any,
 ): { type: string; controlType: string; elements?: any[] } => {
   const primitiveTypeMap = {
     string: { type: "string", controlType: "string" },
@@ -386,14 +359,14 @@ const _parseComponentDocProps = (
     if (Array.isArray(type?.elements) && type.elements.length > 0) {
       if (
         type.elements.some(
-          (elem: any) => elem.name === "Array" || elem.name === "Record"
+          (elem: any) => elem.name === "Array" || elem.name === "Record",
         )
       ) {
         type.elements = parseElementsArray(type.elements);
       }
       const firstElementParsed = tryParseOrDefault(
         type.elements[0].name,
-        undefined
+        undefined,
       );
       if (firstElementParsed === undefined) {
         return {
@@ -406,7 +379,7 @@ const _parseComponentDocProps = (
         (type.elements as { name: unknown }[]).every(
           ({ name }) =>
             typeof tryParseOrDefault(name + "", undefined) ===
-            typeof firstElementParsed
+            typeof firstElementParsed,
         ) &&
         typeof firstElementParsed in primitiveTypeMap
       ) {
@@ -427,7 +400,7 @@ const _parseComponentDocProps = (
   }
   if (
     type?.elements?.some(
-      (elem: any) => elem.name === "Array" || elem.name === "Record"
+      (elem: any) => elem.name === "Array" || elem.name === "Record",
     )
   ) {
     type.elements = parseElementsArray(type.elements);
@@ -487,7 +460,7 @@ const mapSlotsWithTemplate = ([key, value]: [string, unknown]) => {
         return h(
           defineComponent({
             template: value + "",
-          })
+          }),
         );
       } catch (error) {
         return value;
@@ -503,15 +476,14 @@ const codePreview = computed(() => {
     ...Object.fromEntries(
       Object.entries(JSON.parse(JSON.stringify(query.slots)))
         .filter(([_, val]) => val != null)
-        .map(mapSlotsWithTemplate)
+        .map(mapSlotsWithTemplate),
     ),
   };
 
   const propStr = Object.entries(_props)
     .map(([key, value]) => {
-      let defaultValue = filteredProps.value?.find(
-        (a) => a.name === key
-      )?.defaultValue;
+      let defaultValue = filteredProps.value?.find((a) => a.name === key)
+        ?.defaultValue;
       if (defaultValue?.startsWith("'") && defaultValue?.endsWith("'")) {
         defaultValue = defaultValue.slice(1, -1);
       }
@@ -519,7 +491,7 @@ const codePreview = computed(() => {
         `default value for ${key} is `,
         defaultValue,
         "found",
-        value === undefined ? "undefined" : value
+        value === undefined ? "undefined" : value,
       );
       if ((defaultValue == undefined && !value) || value === defaultValue) {
         return null;
@@ -538,7 +510,7 @@ const codePreview = computed(() => {
   const slots = _slots
     ? Object.entries(_slots)
         .map(([slot, content]) =>
-          content == null ? null : `  <template #${slot}>${content}</template>`
+          content == null ? null : `  <template #${slot}>${content}</template>`,
         )
         .filter(Boolean)
         .join("\n")
@@ -562,7 +534,7 @@ const Comp = computed(() => {
   const slots = Object.fromEntries(
     Object.entries(JSON.parse(JSON.stringify(query.slots)))
       .filter(([_, val]) => val != null)
-      .map(mapSlotsWithTemplate)
+      .map(mapSlotsWithTemplate),
   );
   const handleModels = Object.fromEntries(
     Object.entries(props.handleModels).map(([eventKey, controlKey]) => {
@@ -572,7 +544,7 @@ const Comp = computed(() => {
           query.controls[controlKey] = v;
         },
       ];
-    })
+    }),
   );
   return props.story.docs.render.defaultRenderer({
     props: {

@@ -8,6 +8,6 @@
   },
   "devDependencies": {
     "lerna": "^6.6.2",
-    "turbo": "^1.10.7"
+    "turbo": "^1.10.8"
   }
 }

@@ -207,8 +207,8 @@ const props = withDefaults(
     handleModels: Record<string, string>
   }>(),
   {
-    initialSlots: {},
-    initialControls: {},
+    initialSlots: () => ({}),
+    initialControls: () => ({}),
     handleModels: () => ({}),
   }
 )

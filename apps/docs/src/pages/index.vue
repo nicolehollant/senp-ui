@@ -44,12 +44,7 @@
           <NuxtLink to="/examples/virtual-scroller"><SenpButton>virtual-scroller</SenpButton></NuxtLink>
         </ul>
       </nav>
-      <!-- <pre><code>{{ SenpButtonInline }}</code></pre> -->
       <RawComponent language="vue" senpUiModuleContains="SenpButton.vue"></RawComponent>
     </template>
   </SenpLayoutBasic>
 </template>
-
-<script setup lang="ts">
-// import SenpButtonInline from '~~/node_modules/senp-ui/dist/runtime/components/SenpButton.vue?raw'
-</script>

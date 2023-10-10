@@ -1,7 +1,5 @@
 <template>
-  <p v-if="Comp == null">
-    Component not found 😕
-  </p>
+  <p v-if="Comp == null">Component not found 😕</p>
   <ComponentExamplePreview
     v-else
     :docgen-info="story?.component?.__docgenInfo"
@@ -25,10 +23,10 @@ const props = withDefaults(
     handleModels?: any;
   }>(),
   {
-    initialSlots: {},
-    initialControls: {},
-    handleModels: {},
-  }
+    initialSlots: () => ({}),
+    initialControls: () => ({}),
+    handleModels: () => ({}),
+  },
 );
 
 const tryParseOrEmptyObject = (val: string) => {
@@ -60,7 +58,7 @@ const mapSlotsWithTemplate = ([key, value]: [string, unknown]) => {
         return h(
           defineComponent({
             template: value + "",
-          })
+          }),
         );
       } catch (error) {
         return value;
@@ -87,8 +85,8 @@ const Comp = computed(() => {
   const controls = tryParseOrEmptyObject(route.query.controls + "");
   const slots = Object.fromEntries(
     Object.entries(tryParseOrEmptyObject(route.query.slots + "")).map(
-      mapSlotsWithTemplate
-    )
+      mapSlotsWithTemplate,
+    ),
   );
   if (story.value) {
     return story.value.render({

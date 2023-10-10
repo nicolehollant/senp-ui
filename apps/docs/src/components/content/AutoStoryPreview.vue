@@ -22,9 +22,9 @@ const props = withDefaults(
     handleModels?: any
   }>(),
   {
-    initialSlots: {},
-    initialControls: {},
-    handleModels: {},
+    initialSlots: () => ({}),
+    initialControls: () => ({}),
+    handleModels: () => ({}),
   }
 )
 

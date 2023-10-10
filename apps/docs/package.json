@@ -21,7 +21,7 @@
     "js-beautify": "^1.14.7",
     "prettier": "^3.0.0",
     "sass": "^1.63.6",
-    "senp-ui": "workspace:^0.1.2",
+    "senp-ui": "workspace:^0.1.5",
     "vite": "^4.4.4"
   }
 }

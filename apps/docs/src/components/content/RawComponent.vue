@@ -19,7 +19,7 @@ const props = defineProps<{
   /**
    * language for syntax highlighting
    */
-  language: any
+  language: '' | 'vue' | 'javascript' | 'python' | 'vue-html' | 'html' | 'typescript' | 'json' | 'bash'
 }>()
 
 const content = ref(props.value || '')

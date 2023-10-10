@@ -5,39 +5,7 @@ import { resolve } from 'path'
 export default defineNuxtConfig({
   // ssr: false,
   extends: ['@nuxt-fable/layer'],
-  modules: [
-    'senp-ui',
-    '@nuxt/content',
-    async (inlineOptions, nuxt) => {
-      nuxt.options.runtimeConfig.public.rawContent = {
-        SenpButton: 'asdkfhjasd',
-      }
-    },
-    // defineNuxtModule({
-    //   setup(options, nuxt) {
-    //     // Create resolver to resolve relative paths
-    //     // const { resolve } = createResolver(import.meta.url)
-
-    //     addPlugin(
-    //       addPluginTemplate({
-    //         filename: 'rawContent',
-    //         getContents: () => `
-    //         import { defineNuxtPlugin } from '#imports'
-    //         export default defineNuxtPlugin(() => {
-    //             return {
-    //               provide: {
-    //                 rawContent: {
-    //                   SenpButton: 'asdkfhjasd',
-    //                 },
-    //               },
-    //             }
-    //           })
-    //         `,
-    //       })
-    //     )
-    //   },
-    // }),
-  ],
+  modules: ['senp-ui', '@nuxt/content'],
   srcDir: './src/',
   senpui: {
     global: true,

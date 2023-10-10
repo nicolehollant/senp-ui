@@ -25,43 +25,44 @@ const props = defineProps<{
 const content = ref(props.value || '')
 onMounted(() => {
   try {
-    const senpUiModules = import.meta.glob('~~/node_modules/senp-ui/src/runtime/**/*', { as: 'raw' })
-    const localModules = import.meta.glob('~/**/*', { as: 'raw' })
-    console.log({ senpUiModules, localModules })
-    if (props.path) {
-      import(/* @vite-ignore */ props.path)
-        .then((v) => {
-          console.log(v)
-          content.value = v
-        })
-        .catch((err) => {
-          console.log(err)
-          content.value = err
-        })
-      return
-    }
-    if (props.localModuleContains) {
-      Object.entries(localModules)
-        .find(([key, value]) => key.includes(props.localModuleContains!))?.[1]()
-        .then((val) => {
-          console.log(val)
-          content.value = val + ''
-        })
-        .catch((err) => {
-          console.log({ err })
-        })
-    }
-    if (props.senpUiModuleContains) {
-      Object.entries(senpUiModules)
-        .find(([key, value]) => key.includes(props.senpUiModuleContains!))?.[1]()
-        .then((val) => {
-          console.log(val)
-          content.value = val + ''
-        })
-        .catch((err) => {
-          console.log({ err })
-        })
-    }
+    // const senpUiModules = import.meta.glob('~~/node_modules/senp-ui/src/runtime/**/*', { as: 'raw' })
+    // const localModules = import.meta.glob('~/**/*', { as: 'raw' })
+    // console.log({ senpUiModules, localModules })
+    // if (props.path) {
+    //   import(/* @vite-ignore */ props.path)
+    //     .then((v) => {
+    //       console.log(v)
+    //       content.value = v
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //       content.value = err
+    //     })
+    //   return
+    // }
+    // if (props.localModuleContains) {
+    //   Object.entries(localModules)
+    //     .find(([key, value]) => key.includes(props.localModuleContains!))?.[1]()
+    //     .then((val) => {
+    //       console.log(val)
+    //       content.value = val + ''
+    //     })
+    //     .catch((err) => {
+    //       console.log({ err })
+    //     })
+    // }
+    // if (props.senpUiModuleContains) {
+    //   Object.entries(senpUiModules)
+    //     .find(([key, value]) => key.includes(props.senpUiModuleContains!))?.[1]()
+    //     .then((val) => {
+    //       console.log(val)
+    //       content.value = val + ''
+    //     })
+    //     .catch((err) => {
+    //       console.log({ err })
+    //     })
+    // }
+    console.log('man')
   } catch (error) {
     console.log('failed to load globs? idk')
   }

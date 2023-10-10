@@ -1,3 +1,4 @@
+import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 import { defineNuxtModule, addPlugin, addPluginTemplate } from '@nuxt/kit'
 
 import { resolve } from 'path'
@@ -72,7 +73,10 @@ export default defineNuxtConfig({
     },
   },
   build: {
-    transpile: ['js-beautify', 'monaco-editor'],
+    transpile: ['js-beautify'],
+  },
+  vite: {
+    plugins: [monacoEditorPlugin({})],
   },
   app: {
     head: {

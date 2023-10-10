@@ -16,8 +16,10 @@ importers:
       '@nuxt/content': ^2.7.0
       '@types/dedent': ^0.7.0
       '@types/node': ^18.16.19
+      emmet-monaco-es: ^5.3.0
       fast-glob: ^3.3.1
       js-beautify: ^1.14.7
+      monaco-editor: ^0.44.0
       nuxt: ^3.6.3
       prettier: ^3.0.0
       sass: ^1.63.6
@@ -28,8 +30,10 @@ importers:
       '@nuxt-fable/layer': 0.0.10_arpldnlwha7wqj7s2h47yp4yie
       '@nuxt/content': 2.7.0
       '@types/node': 18.16.19
+      emmet-monaco-es: 5.3.0_monaco-editor@0.44.0
       fast-glob: 3.3.1
       js-beautify: 1.14.8
+      monaco-editor: 0.44.0
       prettier: 3.0.0
       sass: 1.63.6
       senp-ui: link:../../packages/module
@@ -5631,6 +5635,15 @@ packages:
   /electron-to-chromium/1.4.461:
     resolution: {integrity: sha512-1JkvV2sgEGTDXjdsaQCeSwYYuhLRphRpc+g6EHTFELJXEiznLt3/0pZ9JuAOQ5p2rI3YxKTbivtvajirIfhrEQ==}
 
+  /emmet-monaco-es/5.3.0_monaco-editor@0.44.0:
+    resolution: {integrity: sha512-+Somf9sB9Smzfl2FV9E19/DA5osHq488dv8KaGavozkv2fo69Y2rY0EoL4vWQk5FpMBc0YfdtiRsuw48Sdxs5g==}
+    peerDependencies:
+      monaco-editor: '>=0.22.0'
+    dependencies:
+      emmet: 2.4.5
+      monaco-editor: 0.44.0
+    dev: false
+
   /emmet/2.4.5:
     resolution: {integrity: sha512-xOiVNINJFh0dMik+KzXSEYbAnFLTnadEzanxj7+F15uIf6avQwu3uPa1wI/8AFtOWKZ8lHg7TjC83wXcPhgOPw==}
     dependencies:
@@ -8806,6 +8819,10 @@ packages:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /monaco-editor/0.44.0:
+    resolution: {integrity: sha512-5SmjNStN6bSuSE5WPT2ZV+iYn1/yI9sd4Igtk23ChvqB7kDk9lZbB9F5frsuvpB+2njdIeGGFf2G4gbE6rCC9Q==}
+    dev: false
 
   /mri/1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}

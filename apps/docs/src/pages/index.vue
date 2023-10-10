@@ -44,7 +44,6 @@
           <NuxtLink to="/examples/virtual-scroller"><SenpButton>virtual-scroller</SenpButton></NuxtLink>
         </ul>
       </nav>
-      <RawComponent language="vue" senpUiModuleContains="SenpButton.vue"></RawComponent>
     </template>
   </SenpLayoutBasic>
 </template>

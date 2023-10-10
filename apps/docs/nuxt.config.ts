@@ -13,16 +13,15 @@ export default defineNuxtConfig({
   modules: [
     'senp-ui',
     '@nuxt/content',
+    /**
+     * god awful module to load raw file contents in at build time :)
+     */
     defineNuxtModule({
       async setup(inlineOptions, nuxt) {
         const senpUiModules = await glob(
           joinURL(withTrailingSlash(nuxt.options.rootDir), '/node_modules/senp-ui/src/runtime/**/*')
         )
         const localModules = await glob(joinURL(withTrailingSlash(nuxt.options.srcDir), '/**/*'))
-        // const senpUiModules = import.meta.glob('~~/node_modules/senp-ui/src/runtime/**/*', { as: 'raw' })
-        // const localModules = import.meta.glob('~/**/*', { as: 'raw' })
-        console.log({ senpUiModules })
-
         nuxt.options.runtimeConfig.rawContent = {
           senpUiModules: Object.fromEntries(
             senpUiModules.map((path) => {
@@ -37,30 +36,6 @@ export default defineNuxtConfig({
         }
       },
     }),
-    // defineNuxtModule({
-    //   setup(options, nuxt) {
-    //     // Create resolver to resolve relative paths
-    //     // const { resolve } = createResolver(import.meta.url)
-
-    //     addPlugin(
-    //       addPluginTemplate({
-    //         filename: 'rawContent',
-    //         getContents: () => `
-    //         import { defineNuxtPlugin } from '#imports'
-    //         export default defineNuxtPlugin(() => {
-    //             return {
-    //               provide: {
-    //                 rawContent: {
-    //                   SenpButton: 'asdkfhjasd',
-    //                 },
-    //               },
-    //             }
-    //           })
-    //         `,
-    //       })
-    //     )
-    //   },
-    // }),
   ],
   srcDir: './src/',
   senpui: {

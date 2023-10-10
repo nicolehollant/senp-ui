@@ -15,6 +15,5 @@ export default defineEventHandler((event) => {
     }
     return { key, error: 'No content found', value: null }
   }
-
   return { key: (config.rawContent as any).senpUiModules, senpUiModuleContains, localModuleContains, value: null }
 })

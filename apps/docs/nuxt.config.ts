@@ -9,7 +9,7 @@ import { readFileSync } from 'fs'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // ssr: false,
+  ssr: false,
   extends: ['@nuxt-fable/layer'],
   modules: [
     'senp-ui',
@@ -73,10 +73,20 @@ export default defineNuxtConfig({
     },
   },
   build: {
-    transpile: ['js-beautify'],
+    transpile: ['js-beautify', 'monaco-editor'],
   },
   vite: {
     plugins: [monacoEditorPlugin({})],
+    optimizeDeps: {
+      exclude: ['monaco-editor'],
+      include: [
+        `/language/json/json.worker`,
+        `/language/css/css.worker`,
+        `/language/html/html.worker`,
+        `/language/typescript/ts.worker`,
+        `/editor/editor.worker`,
+      ].map((a) => 'monaco-editor/esm/vs' + a),
+    },
   },
   app: {
     head: {

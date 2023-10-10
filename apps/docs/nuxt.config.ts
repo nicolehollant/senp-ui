@@ -72,7 +72,7 @@ export default defineNuxtConfig({
     },
   },
   build: {
-    transpile: ['js-beautify'],
+    transpile: ['js-beautify', 'monaco-editor'],
   },
   app: {
     head: {

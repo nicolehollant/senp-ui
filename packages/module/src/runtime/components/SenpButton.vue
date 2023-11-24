@@ -12,7 +12,7 @@
           block: block,
           ...(!!square ? { square: size } : { padding: size }),
         }),
-        classes?.button
+        classes?.button,
       )
     "
     :disabled="loading || disabled"
@@ -20,11 +20,7 @@
     v-bind="$attrs"
     :tabindex="tabindex"
   >
-    <slot
-      name="leading"
-      :disabled="disabled"
-      :loading="loading"
-    >
+    <slot name="leading" :disabled="disabled" :loading="loading">
       <Icon
         v-if="leading || loading"
         :name="loading ? loadingIcon : leading || ''"
@@ -32,7 +28,7 @@
           $cx(
             styles.icon({ size }),
             classes?.leading,
-            loading ? 'animate-spin' : ''
+            loading ? 'animate-spin' : '',
           )
         "
         aria-hidden="true"
@@ -43,11 +39,7 @@
       {{ label }}
     </slot>
 
-    <slot
-      name="trailing"
-      :disabled="disabled"
-      :loading="loading"
-    >
+    <slot name="trailing" :disabled="disabled" :loading="loading">
       <Icon
         v-if="trailing"
         :name="loading && !leading ? loadingIcon : trailing"
@@ -55,7 +47,7 @@
           $cx(
             styles.icon({ size }),
             classes?.trailing,
-            loading && !leading ? 'animate-spin' : ''
+            loading && !leading ? 'animate-spin' : '',
           )
         "
         aria-hidden="true"
@@ -67,7 +59,7 @@
 <script setup lang="ts">
 import { computed, resolveComponent } from "vue";
 import { cva } from "class-variance-authority";
-import { ClassValue } from "class-variance-authority/dist/types";
+import type { ClassValue } from "class-variance-authority/dist/types";
 
 const props = withDefaults(
   defineProps<{
@@ -157,7 +149,7 @@ const props = withDefaults(
     rounded: "md",
     loadingIcon: "mdi:loading",
     tabindex: "0",
-  }
+  },
 );
 
 const buttonIs = computed(() => {
@@ -231,7 +223,7 @@ const styles = {
           link: "text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500 underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400",
         },
       },
-    }
+    },
   ),
   icon: cva("flex-shrink-0", {
     variants: {

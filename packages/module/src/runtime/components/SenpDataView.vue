@@ -29,13 +29,13 @@
                     state.cellGap === 'sm'
                       ? '0.5rem'
                       : state.cellGap === 'md'
-                        ? '1rem'
-                        : '2rem'
+                      ? '1rem'
+                      : '2rem'
                   }`"
                 >
                   <template
                     v-for="k in [...headers].filter(
-                      (a) => a.visible && a.as === 'list'
+                      (a) => a.visible && a.as === 'list',
                     )"
                   >
                     <div
@@ -75,13 +75,13 @@
                 <section
                   v-if="
                     state.tagPosition === 'top' &&
-                      headers.filter((a) => a.visible && a.as === 'tag').length
+                    headers.filter((a) => a.visible && a.as === 'tag').length
                   "
                   class="flex flex-wrap gap-2 pb-3"
                 >
                   <div
                     v-for="k in headers.filter(
-                      (a) => a.visible && a.as === 'tag'
+                      (a) => a.visible && a.as === 'tag',
                     )"
                     class="rounded bg-gray-900 flex leading-none"
                     :class="{
@@ -122,7 +122,7 @@
                   class="flex space-evenly flex-wrap md:grid"
                   :class="{
                     'bg-gray-900 p-4 rounded-xl': headers.filter(
-                      (a) => a.visible && a.as !== 'cell'
+                      (a) => a.visible && a.as !== 'cell',
                     ).length,
                     'gap-4 md:gap-2': state.cellGap === 'sm',
                     'gap-4': state.cellGap === 'md',
@@ -133,18 +133,18 @@
                     .reduce(
                       (prev, curr) =>
                         (prev += curr.span === 'full' ? 0 : Number(curr.span)),
-                      0
+                      0,
                     )}, ${
                     state.cellSpacing === 'even'
                       ? 'minmax(0, 1fr)'
                       : state.cellSpacing === 'auto'
-                        ? 'auto'
-                        : 'max-content'
+                      ? 'auto'
+                      : 'max-content'
                   });`"
                 >
                   <template
                     v-for="k in headers.filter(
-                      (a) => a.visible && a.as === 'cell'
+                      (a) => a.visible && a.as === 'cell',
                     )"
                   >
                     <div
@@ -188,13 +188,13 @@
                 <section
                   v-if="
                     state.tagPosition === 'bottom' &&
-                      headers.filter((a) => a.visible && a.as === 'tag').length
+                    headers.filter((a) => a.visible && a.as === 'tag').length
                   "
                   class="flex flex-wrap gap-2"
                 >
                   <div
                     v-for="k in headers.filter(
-                      (a) => a.visible && a.as === 'tag'
+                      (a) => a.visible && a.as === 'tag',
                     )"
                     class="rounded bg-gray-900 flex leading-none"
                     :class="{
@@ -241,21 +241,19 @@
                   class="rounded-sm py-2 px-2 leading-none w-full"
                 >
                   <summary class="w-full cursor-pointer">
-                    <div class="inline ml-2 text-sm w-full">
-                      Details
-                    </div>
+                    <div class="inline ml-2 text-sm w-full">Details</div>
                   </summary>
                   <div
                     class="grid gap-2 py-2"
                     :class="{
                       '!px-6': !headers.filter(
-                        (a) => a.visible && a.as !== 'cell'
+                        (a) => a.visible && a.as !== 'cell',
                       ).length,
                     }"
                   >
                     <div
                       v-for="k in headers.filter(
-                        (a) => a.visible && a.as === 'details'
+                        (a) => a.visible && a.as === 'details',
                       )"
                       class="rounded bg-gray-900 px-4 py-1 flex items-center leading-none w-full"
                     >
@@ -289,10 +287,7 @@
             class="w-12 sm:w-16 h-12 sm:h-16 flex items-center justify-center rounded-full bg-blue-600 hover:animate-wiggle animation-repeat-infinite"
             @click="state.settingsOpen = true"
           >
-            <Icon
-              class="text-2xl sm:text-3xl"
-              name="mdi:cog"
-            />
+            <Icon class="text-2xl sm:text-3xl" name="mdi:cog" />
           </button>
         </div>
       </slot>
@@ -305,21 +300,15 @@
       :classes="{ maxSize: { base: 'w-full max-h-[75vh]' } }"
       title="Table Settings"
     >
-      <p class="mx-4 py-2 text-sm">
-        Filters
-      </p>
+      <p class="mx-4 py-2 text-sm">Filters</p>
       <div class="m-3 rounded-lg bg-gray-900/20 p-2 grid gap-4">
         <div class="grid gap-4">
           <div class="grid gap-1">
-            <p class="text-xs text-gray-200">
-              Limit Data
-            </p>
+            <p class="text-xs text-gray-200">Limit Data</p>
             <SenpTextInput v-model="state.limit" />
           </div>
           <div class="grid gap-1">
-            <p class="text-xs text-gray-200">
-              Filters
-            </p>
+            <p class="text-xs text-gray-200">Filters</p>
             <div class="grid gap-2">
               <div
                 v-for="(filter, i) in filters"
@@ -333,16 +322,12 @@
                 <SenpSelect
                   v-model="filter.op"
                   placeholder="-- Operation --"
-                  :options="(filterOperations as any)"
+                  :options="filterOperations as any"
                 />
                 <SenpTextInput v-model="filter.value" />
                 <div class="flex items-center gap-1">
-                  <p class="text-lg text-gray-400">
-                    (
-                  </p>
-                  <p class="text-xs text-gray-400">
-                    Options
-                  </p>
+                  <p class="text-lg text-gray-400">(</p>
+                  <p class="text-xs text-gray-400">Options</p>
                   <SenpAutoComplete
                     v-if="
                       (filter.op === '=' || filter.op === '!=') && filter.key
@@ -357,9 +342,7 @@
                     "
                     @update:model-value="(v) => (filter.value = v.label)"
                   />
-                  <p class="text-lg text-gray-400">
-                    )
-                  </p>
+                  <p class="text-lg text-gray-400">)</p>
                 </div>
                 <SenpButton @click="() => filters.splice(i, 1)">
                   <Icon name="mdi:trash-can" />
@@ -375,15 +358,10 @@
           <p>{{ filteredData.length }} results</p>
         </div>
       </div>
-      <p class="mx-4 py-2 text-sm">
-        Sorters
-      </p>
+      <p class="mx-4 py-2 text-sm">Sorters</p>
       <div class="m-3 rounded-lg bg-gray-900/20 p-2 grid gap-4">
         <div class="grid gap-2">
-          <div
-            v-for="(sorter, i) in sorters"
-            class="flex items-center gap-2"
-          >
+          <div v-for="(sorter, i) in sorters" class="flex items-center gap-2">
             <SenpSelect
               v-model="sorter.key"
               placeholder="-- Field --"
@@ -392,7 +370,7 @@
             <SenpSelect
               v-model="sorter.op"
               placeholder="-- Order --"
-              :options="(sorterOperations as any)"
+              :options="sorterOperations as any"
             />
             <SenpButton @click="() => sorters.splice(i, 1)">
               <Icon name="mdi:trash-can" />
@@ -403,33 +381,25 @@
           </SenpButton>
         </div>
       </div>
-      <p class="mx-4 py-2 text-sm">
-        Global Settings
-      </p>
+      <p class="mx-4 py-2 text-sm">Global Settings</p>
       <div class="m-3 rounded-lg overflow-hidden bg-gray-900/20 p-2 grid gap-4">
         <div class="flex flex-wrap gap-4">
           <div class="grid gap-1">
-            <p class="text-xs text-gray-200">
-              Cell Spacing
-            </p>
+            <p class="text-xs text-gray-200">Cell Spacing</p>
             <SenpRadioGroup
               v-model="state.cellSpacing"
               :options="['even', 'max', 'auto']"
             />
           </div>
           <div class="grid gap-1">
-            <p class="text-xs text-gray-200">
-              Cell Gap
-            </p>
+            <p class="text-xs text-gray-200">Cell Gap</p>
             <SenpRadioGroup
               v-model="state.cellGap"
               :options="['sm', 'md', 'lg']"
             />
           </div>
           <div class="grid gap-1">
-            <p class="text-xs text-gray-200">
-              Tag Position
-            </p>
+            <p class="text-xs text-gray-200">Tag Position</p>
             <SenpRadioGroup
               v-model="state.tagPosition"
               :options="['top', 'bottom']"
@@ -437,9 +407,7 @@
           </div>
         </div>
         <div class="grid gap-1">
-          <p class="text-xs text-gray-200">
-            Set All
-          </p>
+          <p class="text-xs text-gray-200">Set All</p>
           <div class="flex gap-4 flex-wrap">
             <SenpActionButtonGroup
               :options="['cell', 'list', 'details', 'tag']"
@@ -483,31 +451,25 @@
             />
             <SenpActionButtonGroup
               :options="[{ value: true }, { value: false }]"
-              @click="(value: boolean) => {
-                headers.forEach((_, i) => {
-                  headers[i].visible = value
-                })
-              }"
+              @click="
+                (value: boolean) => {
+                  headers.forEach((_, i) => {
+                    headers[i].visible = value;
+                  });
+                }
+              "
             >
               <template #0>
-                <Icon
-                  name="mdi:eye-outline"
-                  class="text-gray-400"
-                />
+                <Icon name="mdi:eye-outline" class="text-gray-400" />
               </template>
               <template #1>
-                <Icon
-                  name="mdi:eye-off-outline"
-                  class="text-gray-400"
-                />
+                <Icon name="mdi:eye-off-outline" class="text-gray-400" />
               </template>
             </SenpActionButtonGroup>
           </div>
         </div>
       </div>
-      <p class="mx-4 py-2 text-sm">
-        Field Settings
-      </p>
+      <p class="mx-4 py-2 text-sm">Field Settings</p>
       <SenpDraggableList
         v-model="headers"
         handle=".handle"
@@ -582,7 +544,7 @@
 </template>
 
 <script setup lang="ts">
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 import type {
   CsvFilter,
   CsvSorter,
@@ -611,7 +573,7 @@ const props = withDefaults(
     queryKeyPrefix: "",
     keyField: "id",
     settingsStrategy: "fixed",
-  }
+  },
 );
 
 const {
@@ -653,4 +615,3 @@ summary::marker {
   color: #ffffff60;
 }
 </style>
-../plugins/senpCx

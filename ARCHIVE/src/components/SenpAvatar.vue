@@ -38,7 +38,7 @@ import { cva } from 'class-variance-authority'
 import svgToMiniDataURI from 'mini-svg-data-uri'
 import { generateFromString } from 'generate-avatar'
 import { XClass } from '../plugins/xClass'
-import { ClassValue } from 'class-variance-authority/dist/types'
+import type { ClassValue } from 'class-variance-authority/dist/types'
 
 const styles = {
   wrapper: cva('relative inline-flex items-center justify-center'),

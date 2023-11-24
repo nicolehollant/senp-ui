@@ -19,23 +19,10 @@
     :classes="{ panelWrapper: { base: '' } }"
   >
     <div class="p-4">
-      <SenpTextInput
-        v-model="state.query"
-        placeholder="search..."
-      />
-      <ul
-        v-if="data?.length"
-        class="mt-4 w-full"
-      >
-        <li
-          v-for="article in data.slice(0, 10)"
-          class="w-full"
-        >
-          <NuxtLink
-            v-slot="{ href, navigate }"
-            :to="article._path"
-            custom
-          >
+      <SenpTextInput v-model="state.query" placeholder="search..." />
+      <ul v-if="data?.length" class="mt-4 w-full">
+        <li v-for="article in data.slice(0, 10)" class="w-full">
+          <NuxtLink v-slot="{ href, navigate }" :to="article._path" custom>
             <SenpButton
               class="!w-full"
               :class="{
@@ -73,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { ParsedContent } from "@nuxt/content/dist/runtime/types";
+import type { ParsedContent } from "@nuxt/content/dist/runtime/types";
 import {
   queryContent,
   useRoute,
@@ -112,14 +99,14 @@ const { data } = await useLazyAsyncData(
       })
       .find();
   },
-  { watch: [() => state.query] }
+  { watch: [() => state.query] },
 );
 
 watch(
   () => route.fullPath,
   () => {
     state.modal = false;
-  }
+  },
 );
 
 useKeyboardShortcut({

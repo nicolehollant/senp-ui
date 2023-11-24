@@ -1,9 +1,5 @@
 <template>
-  <HeadlessTransitionRoot
-    appear
-    :show="open"
-    as="template"
-  >
+  <HeadlessTransitionRoot appear :show="open" as="template">
     <HeadlessDialog
       as="div"
       class="relative z-50"
@@ -74,9 +70,9 @@
                 $senpCx(
                   side === 'left' || side === 'right'
                     ? 'w-full max-h-full max-w-[90vw] lg:max-w-4xl xl:max-w-6xl' +
-                      (fitContent ? ' h-auto' : ' h-full')
+                        (fitContent ? ' h-auto' : ' h-full')
                     : 'w-full max-h-[80vh]',
-                  classes?.maxSize
+                  classes?.maxSize,
                 )
               "
             >
@@ -85,10 +81,7 @@
                   v-if="title"
                   class="flex items-center justify-between sticky top-0 bg-gray-800/50 backdrop-blur shadow p-6 text-lg leading-6"
                 >
-                  <HeadlessDialogTitle
-                    as="h3"
-                    class="font-medium"
-                  >
+                  <HeadlessDialogTitle as="h3" class="font-medium">
                     {{ title }}
                   </HeadlessDialogTitle>
                   <button
@@ -121,7 +114,7 @@
 </template>
 
 <script setup lang="ts">
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 
 withDefaults(
   defineProps<{
@@ -136,10 +129,9 @@ withDefaults(
   {
     fitContent: false,
     side: "right",
-  }
+  },
 );
 defineEmits<{
   (event: "update:open", newValue: boolean): void;
 }>();
 </script>
-../plugins/senpCx

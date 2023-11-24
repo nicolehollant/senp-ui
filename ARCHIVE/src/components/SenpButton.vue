@@ -46,7 +46,7 @@
 
 <script setup lang="ts">
 import { cva } from 'class-variance-authority'
-import { ClassValue } from 'class-variance-authority/dist/types'
+import type { ClassValue } from 'class-variance-authority/dist/types'
 
 const props = withDefaults(
   defineProps<{

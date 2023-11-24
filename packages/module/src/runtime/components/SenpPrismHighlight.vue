@@ -9,7 +9,7 @@
       :class="
         $senpCx(
           '!m-0 overflow-hidden w-full !p-0 grid rounded-lg',
-          classes?.pre
+          classes?.pre,
         )
       "
     ><code
@@ -22,7 +22,7 @@ ref="codeRef"
         :class="
           $senpCx(
             'w-max p-1.5 text-xs bg-black/40 rounded-lg absolute top-2 right-2 font-medium text-gray-400',
-            classes?.title
+            classes?.title,
           )
         "
       >
@@ -35,19 +35,13 @@ ref="codeRef"
         :class="
           $senpCx(
             'group-hover:flex group-hover:opacity-100 opacity-0 hidden w-8 p-1.5 h-8 items-center justify-center text-lg bg-black/40 rounded-lg absolute bottom-2 right-2 text-gray-400 transition duration-500',
-            classes?.clipboard
+            classes?.clipboard,
           )
         "
         @click="() => copy(value ?? '')"
       >
-        <Icon
-          v-if="copied"
-          name="mdi:clipboard-check-outline"
-        />
-        <Icon
-          v-else
-          name="mdi:clipboard-outline"
-        />
+        <Icon v-if="copied" name="mdi:clipboard-check-outline" />
+        <Icon v-else name="mdi:clipboard-outline" />
       </button>
     </slot>
   </div>
@@ -66,7 +60,7 @@ import "prismjs/components/prism-c";
 import "prismjs/components/prism-bash";
 import "prismjs/components/prism-latex";
 import "prismjs/components/prism-sql";
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 import { useClipboard } from "@vueuse/core";
 
 const codeRef = ref<HTMLElement | null>(null);
@@ -98,7 +92,7 @@ const props = withDefaults(
   {
     theme: "",
     clipboard: true,
-  }
+  },
 );
 
 const highlight = () => {
@@ -118,7 +112,7 @@ watch(
   () => {
     highlight();
   },
-  { deep: true }
+  { deep: true },
 );
 
 const { text, copy, copied, isSupported } = useClipboard({
@@ -129,4 +123,3 @@ onMounted(() => {
   highlight();
 });
 </script>
-../plugins/senpCx

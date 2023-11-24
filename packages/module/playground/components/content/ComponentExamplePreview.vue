@@ -209,14 +209,14 @@ v-if="row.type"
 
 <script setup lang="tsx">
 import {
-  VNode,
+  type VNode,
   computed,
   defineComponent,
   h,
   reactive,
   useStoryUtils,
 } from "#imports";
-import { DefineComponent } from "vue";
+import type { DefineComponent } from "vue";
 import type { ComponentDoc } from "vue-docgen-api";
 
 const { generateControls, generateSlotControls } = useStoryUtils();

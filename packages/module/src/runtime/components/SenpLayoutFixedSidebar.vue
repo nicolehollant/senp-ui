@@ -6,7 +6,7 @@
           'grid h-full overflow-hidden',
           sidebarRight ? 'grid-cols-[1fr,auto]' : 'grid-cols-[auto,1fr]',
         ].join(' '),
-        classes?.wrapper
+        classes?.wrapper,
       )
     "
   >
@@ -15,7 +15,7 @@
       :class="
         $senpCx(
           'shrink-0 z-20 h-full flex flex-col gap-4 px-4 sticky top-0 min-w-[200px] min-h-full overflow-auto',
-          classes?.sidebar
+          classes?.sidebar,
         )
       "
     >
@@ -25,7 +25,7 @@
       :class="
         $senpCx(
           'relative h-full w-full grid grid-rows-[auto,1fr,auto] overflow-auto',
-          classes?.contentWrapper
+          classes?.contentWrapper,
         )
       "
     >
@@ -36,7 +36,7 @@
               'shrink-0 z-20 h-16 flex items-center gap-4 px-4',
               fixedHeader ? 'sticky top-0' : 'relative',
             ].join(' '),
-            classes?.header
+            classes?.header,
           )
         "
       >
@@ -56,7 +56,7 @@
               'shrink-0 relative p-4',
               fixedFooter ? 'sticky bottom-0 z-20' : 'relative',
             ].join(' '),
-            classes?.footer
+            classes?.footer,
           )
         "
       >
@@ -68,7 +68,7 @@
       :class="
         $senpCx(
           'shrink-0 z-20 h-full flex flex-col gap-4 px-4 sticky top-0 min-w-[200px] min-h-full overflow-auto',
-          classes?.sidebar
+          classes?.sidebar,
         )
       "
     >
@@ -78,7 +78,7 @@
 </template>
 
 <script setup lang="ts">
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 
 withDefaults(
   defineProps<{
@@ -98,7 +98,6 @@ withDefaults(
     fixedHeader: false,
     fixedFooter: false,
     sidebarRight: false,
-  }
+  },
 );
 </script>
-../plugins/senpCx

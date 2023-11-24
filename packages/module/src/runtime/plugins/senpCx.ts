@@ -1,5 +1,5 @@
 import { defineNuxtPlugin } from "#imports";
-import { CxOptions, cva, cx } from "class-variance-authority";
+import { type CxOptions, cva, cx } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 export type SenpCx = {
   extend?: string;

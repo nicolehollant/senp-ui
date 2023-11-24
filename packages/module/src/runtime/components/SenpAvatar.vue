@@ -56,7 +56,7 @@ import { ref, computed } from "vue";
 import { cva } from "class-variance-authority";
 import { createAvatar } from "@dicebear/core";
 import { thumbs } from "@dicebear/collection";
-import { ClassValue } from "class-variance-authority/dist/types";
+import type { ClassValue } from "class-variance-authority/dist/types";
 
 const styles = {
   wrapper: cva("relative inline-flex items-center justify-center"),

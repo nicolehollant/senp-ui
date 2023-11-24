@@ -4,7 +4,7 @@
       :class="
         $senpCx(
           labelSide === 'top' ? 'grid gap-1' : 'flex items-center gap-2',
-          classes?.labelWrapper
+          classes?.labelWrapper,
         )
       "
     >
@@ -29,15 +29,12 @@
               (size === 'input'
                 ? 'w-[42px] h-[42px] text-2xl'
                 : 'w-8 h-8 text-lg'),
-            classes?.input
+            classes?.input,
           ),
         }"
         @update:modelValue="(v) => $emit('update:modelValue', v)"
       >
-        <Icon
-          v-if="modelValue"
-          name="mdi:check"
-        />
+        <Icon v-if="modelValue" name="mdi:check" />
       </HeadlessSwitch>
       <template v-if="labelSide === 'right'">
         <slot name="label">
@@ -59,10 +56,7 @@
       </p>
     </slot>
     <slot name="error">
-      <p
-        v-if="error"
-        :class="$senpCx('text-sm text-red-300', classes?.error)"
-      >
+      <p v-if="error" :class="$senpCx('text-sm text-red-300', classes?.error)">
         {{ error }}
       </p>
     </slot>
@@ -70,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 
 defineEmits<{
   (event: "update:modelValue", newValue: boolean): void;
@@ -120,7 +114,6 @@ withDefaults(
   {
     labelSide: "top",
     size: "base",
-  }
+  },
 );
 </script>
-../plugins/senpCx

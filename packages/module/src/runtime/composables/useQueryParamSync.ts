@@ -2,13 +2,13 @@ import JsonURL from "jsurl";
 import {
   useRoute,
   useRouter,
-  Ref,
+  type Ref,
   isReadonly,
   isRef,
   onMounted,
   watch,
 } from "#imports";
-import { WatchSource } from "nuxt/dist/app/compat/capi";
+import type { WatchSource } from "nuxt/dist/app/compat/capi";
 
 type TOptions = Partial<{
   runOnMounted: boolean;
@@ -20,7 +20,7 @@ type TOptions = Partial<{
 export const useQueryParamSync = <T extends WatchSource>(
   value: T,
   queryKey: string,
-  options?: TOptions
+  options?: TOptions,
 ) => {
   const route = useRoute();
   const router = useRouter();
@@ -36,7 +36,7 @@ export const useQueryParamSync = <T extends WatchSource>(
     {
       deep: options?.watchDeep ?? false,
       immediate: options?.watchImmediate ?? false,
-    }
+    },
   );
   const parseQueryParam = () => {
     if (route.query?.[queryKey]) {
@@ -48,7 +48,7 @@ export const useQueryParamSync = <T extends WatchSource>(
         options?.cb?.(queryParamResolved);
       } catch (error) {
         const queryParamResolved = JSON.parse(
-          decodeURIComponent(route.query[queryKey] + "")
+          decodeURIComponent(route.query[queryKey] + ""),
         );
         if (isRef(value) && !isReadonly(value)) {
           (value as Ref).value = queryParamResolved;
@@ -65,7 +65,7 @@ export const useQueryParamSync = <T extends WatchSource>(
     {
       deep: options?.watchDeep ?? false,
       immediate: options?.watchImmediate ?? false,
-    }
+    },
   );
 
   if (options?.runOnMounted ?? false) {

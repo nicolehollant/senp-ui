@@ -19,10 +19,7 @@
       @start="drag = true"
       @end="drag = false"
     >
-      <template
-        v-for="(_, slot) of $slots"
-        #[slot]="scope"
-      >
+      <template v-for="(_, slot) of $slots" #[slot]="scope">
         <div
           :key="scope.element[itemKey]"
           :class="{
@@ -30,11 +27,7 @@
             draggingEl: drag,
           }"
         >
-          <slot
-            :name="slot"
-            v-bind="scope"
-            :drag="drag"
-          />
+          <slot :name="slot" v-bind="scope" :drag="drag" />
         </div>
       </template>
     </draggable>
@@ -44,7 +37,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import draggable from "vuedraggable";
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 withDefaults(
   defineProps<{
     modelValue: any[];
@@ -61,7 +54,7 @@ withDefaults(
     handle: "",
     group: "description",
     ghostClass: "ghost",
-  }
+  },
 );
 
 defineEmits<{
@@ -94,4 +87,3 @@ const drag = ref(false);
   cursor: pointer;
 }
 </style>
-../plugins/senpCx

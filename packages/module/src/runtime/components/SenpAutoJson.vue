@@ -25,15 +25,12 @@
             :parent-key="[parentKey, key].join('.')"
             :root-value="rootValue ?? value"
             :render-as="renderAs"
-            :value="(val as JSONValue)"
+            :value="val as JSONValue"
           />
         </div>
       </div>
     </details>
-    <div
-      v-else
-      class="flex flex-col gap-2 p-4 rounded-xl bg-gray-800/30"
-    >
+    <div v-else class="flex flex-col gap-2 p-4 rounded-xl bg-gray-800/30">
       <div v-for="(val, key, index) in value">
         <p class="text-xs text-gray-400 font-medium tracking-wider mb-1">
           {{ key }}
@@ -42,7 +39,7 @@
           :parent-key="[parentKey, key].join('.')"
           :root-value="rootValue ?? value"
           :render-as="renderAs"
-          :value="(val as JSONValue)"
+          :value="val as JSONValue"
         />
       </div>
     </div>
@@ -59,7 +56,9 @@
       v-else
       class="rounded-xl gap-3"
       :style="{
-        gridTemplateColumns: `repeat(${(renderStyleFromDotPath as any)?.columns ?? (value as any[]).length}, minmax(0, 1fr))`
+        gridTemplateColumns: `repeat(${
+          (renderStyleFromDotPath as any)?.columns ?? (value as any[]).length
+        }, minmax(0, 1fr))`,
       }"
       :class="{
         'flex flex-wrap': renderStyleFromDotPath?.type === 'row',
@@ -75,7 +74,7 @@
           :parent-key="[parentKey, index].join('.')"
           :root-value="rootValue ?? value"
           :render-as="renderAs"
-          :value="(val as JSONValue)"
+          :value="val as JSONValue"
         />
       </div>
     </div>
@@ -96,18 +95,16 @@
         width: (renderStyleFromDotPath as any)?.width ?? 'auto',
         height: (renderStyleFromDotPath as any)?.height ?? 'auto',
       }"
-    >
+    />
     <a
       v-else-if="renderStyleFromDotPath?.type === 'link'"
       :href="value + ''"
       target="_blank"
       rel="noopener noreferrer"
       class="break-all text-blue-200 underline"
-    >{{ value }}</a>
-    <div
-      v-else
-      class="break-all"
+      >{{ value }}</a
     >
+    <div v-else class="break-all">
       {{ value }}
     </div>
   </template>
@@ -115,7 +112,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { JSONValue } from "../composables/request";
+import type { JSONValue } from "../composables/request";
 
 type AutoJsonRenderObjectOption =
   | { type: "card" }
@@ -160,7 +157,7 @@ const props = withDefaults(
   {
     parentKey: "",
     value: null,
-  }
+  },
 );
 
 const styles = {

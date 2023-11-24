@@ -12,7 +12,7 @@
             success: 'bg-green-800 hover:bg-green-700',
           }[theme],
         ].join(' '),
-        classes?.tag
+        classes?.tag,
       )
     "
     v-bind="$attrs"
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 withDefaults(
   defineProps<{
     /**
@@ -44,7 +44,6 @@ withDefaults(
   {
     as: "div",
     theme: "neutral",
-  }
+  },
 );
 </script>
-../plugins/senpCx

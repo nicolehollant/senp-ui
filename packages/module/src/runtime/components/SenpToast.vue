@@ -2,26 +2,20 @@
   <div
     :class="
       classes?.toast?.base ??
-        twMerge(
-          toastVariants({
-            intent: type,
-            position: placement,
-            class: classes?.toast?.extend,
-          })
-        )
+      twMerge(
+        toastVariants({
+          intent: type,
+          position: placement,
+          class: classes?.toast?.extend,
+        }),
+      )
     "
   >
     <div class="flex items-center justify-between">
-      <p
-        v-if="title"
-        class="font-medium text-sm"
-      >
+      <p v-if="title" class="font-medium text-sm">
         {{ title }}
       </p>
-      <button
-        class="ml-auto p-1 rounded hover:bg-gray-700/20"
-        @click="close"
-      >
+      <button class="ml-auto p-1 rounded hover:bg-gray-700/20" @click="close">
         <Icon name="mdi:close" />
       </button>
     </div>
@@ -36,7 +30,7 @@ import { ref, onMounted } from "vue";
 import { cva } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 import { DefaultToast } from "../plugins/toast";
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 
 const props = withDefaults(
   defineProps<{
@@ -55,7 +49,7 @@ const props = withDefaults(
       toast?: SenpCx;
     };
   }>(),
-  { ...DefaultToast }
+  { ...DefaultToast },
 );
 
 const emit = defineEmits<{
@@ -81,7 +75,7 @@ const toastVariants = cva(
         "bottom-right": "",
       },
     },
-  }
+  },
 );
 
 const timeout = ref<null | NodeJS.Timeout>(null);
@@ -101,4 +95,3 @@ onMounted(() => {
   }
 });
 </script>
-../plugins/senpCx

@@ -5,7 +5,7 @@
     :class="
       $senpCx(
         'flex flex-col gap-4 px-4 pb-4 rounded-lg bg-gray-900',
-        classes?.wrapper
+        classes?.wrapper,
       )
     "
     v-bind="$attrs"
@@ -19,7 +19,7 @@
     :class="
       $senpCx(
         'flex flex-col gap-4 p-4 rounded-lg bg-gray-900',
-        classes?.wrapper
+        classes?.wrapper,
       )
     "
     v-bind="$attrs"
@@ -37,7 +37,7 @@
     :class="
       $senpCx(
         'flex flex-col gap-4 p-4 rounded-lg bg-gray-900',
-        classes?.wrapper
+        classes?.wrapper,
       )
     "
     v-bind="$attrs"
@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 withDefaults(
   defineProps<{
     /**
@@ -76,7 +76,6 @@ withDefaults(
   {
     as: "div",
     type: "basic",
-  }
+  },
 );
 </script>
-../plugins/senpCx

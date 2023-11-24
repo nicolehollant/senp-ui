@@ -68,7 +68,7 @@
 </template>
 
 <script setup lang="ts">
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 
 defineEmits<{
   (event: "update:modelValue", newValue: string): void;
@@ -89,4 +89,3 @@ defineProps<{
   };
 }>();
 </script>
-../plugins/senpCx

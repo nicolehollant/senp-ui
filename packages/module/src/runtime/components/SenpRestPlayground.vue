@@ -110,22 +110,14 @@
             class="w-32"
             :options="['GET', 'PUT', 'POST', 'DELETE']"
           />
-          <SenpTextInput
-            v-model="state.activeRoute"
-            class="w-full"
-          />
-          <SenpButton @click="() => makeRequest()">
-            Send
-          </SenpButton>
+          <SenpTextInput v-model="state.activeRoute" class="w-full" />
+          <SenpButton @click="() => makeRequest()"> Send </SenpButton>
         </div>
         <splitpanes
           class="w-full h-full overflow-auto"
           :horizontal="state.view === 'vertical'"
         >
-          <pane
-            min-size="20"
-            max-size="80"
-          >
+          <pane min-size="20" max-size="80">
             <SenpCodeEditor
               v-model="state.body"
               theme="onedark"
@@ -135,10 +127,7 @@
               class="overflow-auto rounded-none editor"
             />
           </pane>
-          <pane
-            min-size="20"
-            max-size="80"
-          >
+          <pane min-size="20" max-size="80">
             <div
               class="grid w-full h-full"
               :class="{
@@ -203,7 +192,7 @@
 import { ref, defineComponent } from "vue";
 import { Splitpanes, Pane } from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
-import { JSONValue, request } from "../composables/request";
+import { type JSONValue, request } from "../composables/request";
 import { useQueryParamSync } from "../composables/useQueryParamSync";
 
 const props = withDefaults(
@@ -226,7 +215,7 @@ const props = withDefaults(
     title: "REST Playground",
     theme: "atom-dark",
     queryKey: "s",
-  }
+  },
 );
 const ApiMethods: any = {
   POST: (
@@ -295,7 +284,7 @@ const makeRequest = async () => {
       JSON.parse(state.value.body),
       {
         headers: state.value.activeHeaders ?? props.defaultHeaders ?? undefined,
-      }
+      },
     );
     response.value = JSON.stringify(res, null, 2);
   } catch (error) {

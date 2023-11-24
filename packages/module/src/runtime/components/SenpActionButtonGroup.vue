@@ -8,21 +8,18 @@
           'border-r border-black/40': i < options.length - 1,
           ...$senpCx(
             'cursor-pointer px-2 h-8 flex items-center justify-center bg-gray-900 text-gray-400',
-            classes?.button
+            classes?.button,
           ),
         }"
         @click="
           $emit(
             'click',
             typeof option === 'string' ? option : option.value ?? option.label,
-            i
+            i,
           )
         "
       >
-        <slot
-          :name="i"
-          :option="option"
-        >
+        <slot :name="i" :option="option">
           {{
             typeof option === "string" ? option : option.label ?? option.value
           }}
@@ -33,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 
 defineProps<{
   options: { label?: string; value: any }[] | string[];
@@ -46,4 +43,3 @@ defineEmits<{
   (event: "click", value: any, index: number): void;
 }>();
 </script>
-../plugins/senpCx

@@ -3,7 +3,7 @@
     :class="
       $senpCx(
         'relative h-full w-full grid grid-rows-[auto,1fr,auto] overflow-auto',
-        classes?.wrapper
+        classes?.wrapper,
       )
     "
   >
@@ -14,7 +14,7 @@
             'shrink-0 z-30 h-16 flex justify-between items-center gap-4 px-4',
             fixedHeader ? 'sticky top-0' : 'relative',
           ].join(' '),
-          classes?.header
+          classes?.header,
         )
       "
     >
@@ -33,7 +33,7 @@
       :class="
         $senpCx(
           'grid h-full  grid-cols-[auto,1fr,auto]',
-          classes?.contentWrapper
+          classes?.contentWrapper,
         )
       "
     >
@@ -41,7 +41,7 @@
         :class="
           $senpCx(
             'shrink-0 z-20 h-full flex flex-col gap-4 px-4 sticky top-0 min-w-[200px] min-h-full overflow-auto',
-            classes?.sidebarLeft
+            classes?.sidebarLeft,
           )
         "
       >
@@ -58,7 +58,7 @@
         :class="
           $senpCx(
             'shrink-0 z-20 h-full flex flex-col gap-4 px-4 sticky top-0 min-w-[200px] min-h-full overflow-auto',
-            classes?.sidebarRight
+            classes?.sidebarRight,
           )
         "
       >
@@ -75,7 +75,7 @@
         :class="
           $senpCx(
             'shrink-0 z-20 h-full flex flex-col gap-4 px-4 sticky top-0 min-w-[200px] min-h-full overflow-auto',
-            classes?.sidebarLeft
+            classes?.sidebarLeft,
           )
         "
       >
@@ -106,7 +106,7 @@
         :class="
           $senpCx(
             'shrink-0 z-20 h-full flex flex-col gap-4 px-4 sticky top-0 min-w-[200px] min-h-full overflow-auto',
-            classes?.sidebarRight
+            classes?.sidebarRight,
           )
         "
       >
@@ -121,7 +121,7 @@
             'shrink-0 relative p-4',
             fixedFooter ? 'sticky bottom-0 z-30' : 'relative',
           ].join(' '),
-          classes?.footer
+          classes?.footer,
         )
       "
     >
@@ -131,7 +131,7 @@
 </template>
 
 <script setup lang="ts">
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 
 withDefaults(
   defineProps<{
@@ -154,7 +154,6 @@ withDefaults(
     fixedFooter: false,
     sidebarLeft: false,
     sidebarRight: false,
-  }
+  },
 );
 </script>
-../plugins/senpCx

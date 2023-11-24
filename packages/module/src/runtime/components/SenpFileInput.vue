@@ -16,37 +16,31 @@
       type="file"
       class="sr-only"
       @change="updateInputHandler"
-    >
+    />
 
     <label
       for="assetsFieldHandle"
       :class="
         $senpCx(
           'group grid gap-4 rounded-2xl border-2 border-gray-700 bg-gradient-to-br p-8 transition duration-300 cursor-pointer',
-          classes?.dropZone
+          classes?.dropZone,
         )
       "
     >
-      <slot
-        name="dropzone"
-        :dragged-over="draggedOver"
-      >
+      <slot name="dropzone" :dragged-over="draggedOver">
         <div class="grid gap-2 text-center">
           <p>Drag and drop to upload</p>
           <p class="text-xs text-gray-500">or</p>
           <p>
             <span
               class="text-blue-300 transition duration-200 group-hover:text-blue-400 group-hover:underline"
-            >click</span>
+              >click</span
+            >
             to upload your files
           </p>
         </div>
       </slot>
-      <slot
-        name="files"
-        :fnames="fnames"
-        :remove-files="removeFiles"
-      >
+      <slot name="files" :fnames="fnames" :remove-files="removeFiles">
         <div
           v-if="fnames?.length && !hideFiles"
           class="flex flex-col gap-4 items-start pt-3 relative z-30"
@@ -82,7 +76,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 const props = withDefaults(
   defineProps<{
     modelValue?: any;
@@ -100,7 +94,7 @@ const props = withDefaults(
     readAs: "text",
     hideFiles: false,
     multiple: false,
-  }
+  },
 );
 const emit = defineEmits<{
   (event: "update:modelValue", newValue: any): void;
@@ -222,7 +216,7 @@ watch(
       console.log("SHOULD BE REMOVING");
       removeFiles();
     }
-  }
+  },
 );
 </script>
 
@@ -234,4 +228,3 @@ watch(
   @apply bg-gradient-to-br transition duration-300 bg-blue-900 from-gray-800;
 }
 </style>
-../plugins/senpCx

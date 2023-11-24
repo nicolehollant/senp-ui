@@ -1,9 +1,5 @@
 <template>
-  <HeadlessTransitionRoot
-    appear
-    :show="open"
-    as="template"
-  >
+  <HeadlessTransitionRoot appear :show="open" as="template">
     <HeadlessDialog
       as="div"
       class="relative z-50"
@@ -58,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { SenpCx } from "../plugins/senpCx";
+import type { SenpCx } from "../plugins/senpCx";
 
 defineProps<{
   open: boolean;
@@ -71,4 +67,3 @@ defineEmits<{
   (event: "update:open", newValue: boolean): void;
 }>();
 </script>
-../plugins/senpCx

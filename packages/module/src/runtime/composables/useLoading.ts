@@ -7,7 +7,7 @@ export const useLoading = <T = any>(
     runOnMounted: boolean;
     onSuccess: (params?: T) => void;
     onError: (err?: any) => void;
-  }>
+  }>,
 ) => {
   const loading = ref(options?.defaultLoadingState ?? false);
 
@@ -17,7 +17,7 @@ export const useLoading = <T = any>(
     }
     loading.value = true;
     try {
-      const result = await fn(params);
+      const result = await fn(...params);
       loading.value = false;
       options?.onSuccess?.(result);
       return result;

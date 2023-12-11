@@ -1,6 +1,6 @@
 {
   "name": "senp-ui",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Simple nuxt ui component library",
   "repository": "nicolehollant/senp-ui",
   "license": "MIT",
